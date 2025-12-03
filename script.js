@@ -20,4 +20,25 @@ if (yearSpan) {
   yearSpan.textContent = String(new Date().getFullYear());
 }
 
+// Scroll reveal animations
+const revealEls = document.querySelectorAll(".reveal");
+
+if (revealEls.length > 0) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.18,
+    }
+  );
+
+  revealEls.forEach((el) => observer.observe(el));
+}
+
 

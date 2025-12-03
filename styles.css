@@ -597,6 +597,36 @@ a {
   color: #64748b;
 }
 
+/* Scroll reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card / service style hover animations */
+.card,
+.highlight-card,
+.skills-group {
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out,
+    background 0.18s ease-out;
+}
+
+.card:hover,
+.highlight-card:hover,
+.skills-group:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.9);
+  border-color: #38bdf8;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.22), transparent 60%),
+    rgba(15, 23, 42, 1);
+}
+
 @keyframes hero-gradient {
   0% {
     background-position: 0% 0%, 100% 0%, 100% 100%;
