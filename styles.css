@@ -117,6 +117,8 @@ a {
 
 .hero {
   padding: 5rem 0 3.5rem;
+  position: relative;
+  overflow: hidden;
   background: radial-gradient(circle at top left, #1e293b 0, #020617 55%);
 }
 
@@ -125,6 +127,53 @@ a {
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
   gap: 3rem;
   align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.25), transparent 55%),
+    radial-gradient(circle at 100% 0%, rgba(168, 85, 247, 0.22), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(34, 197, 94, 0.22), transparent 55%);
+  background-size: 120% 120%;
+  animation: hero-gradient 24s ease-in-out infinite alternate;
+  opacity: 0.5;
+}
+
+.hero-orb {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  filter: blur(42px);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+}
+
+.orb-1 {
+  background: #38bdf8;
+  top: -80px;
+  left: -60px;
+  animation: float-orb-1 26s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  background: #a855f7;
+  bottom: -120px;
+  right: -40px;
+  animation: float-orb-2 30s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  background: #22c55e;
+  bottom: 10%;
+  left: 40%;
+  width: 190px;
+  height: 190px;
+  animation: float-orb-3 32s ease-in-out infinite alternate;
 }
 
 .hero-kicker {
@@ -546,6 +595,54 @@ a {
 
 .footer-tagline {
   color: #64748b;
+}
+
+@keyframes hero-gradient {
+  0% {
+    background-position: 0% 0%, 100% 0%, 100% 100%;
+  }
+  50% {
+    background-position: 10% 20%, 90% 10%, 90% 80%;
+  }
+  100% {
+    background-position: 20% 40%, 80% 0%, 80% 60%;
+  }
+}
+
+@keyframes float-orb-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(30px, 40px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(60px, 0, 0) scale(1.02);
+  }
+}
+
+@keyframes float-orb-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-40px, -30px, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-10px, -10px, 0) scale(1.02);
+  }
+}
+
+@keyframes float-orb-3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-20px, -10px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(10px, 20px, 0) scale(1.03);
+  }
 }
 
 @media (max-width: 800px) {
