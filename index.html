@@ -605,7 +605,7 @@
   <!-- JavaScript for Galaxy Animation, Eye Tracking, and Chat -->
   <script>
     // --- Gemini Chat Setup ---
-    const apiKey = "";
+    const apiKey = "YOUR_GEMINI_API_KEY_HERE"; // TODO: Replace with your actual Gemini API Key
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
     let chatHistory = [];
@@ -654,7 +654,7 @@
 
     // Initialize chat with welcome message
     function initializeChat() {
-      const welcomeMessage = "Hi, I am Buddy of Taznia. Do you need any help finding information about her projects or skills?";
+      const welcomeMessage = "Hi I am Taznia's buddy .. do you need and help ....";
       displayMessage(welcomeMessage, 'buddy');
       chatHistory.push({ role: "model", parts: [{ text: welcomeMessage }] });
     }
