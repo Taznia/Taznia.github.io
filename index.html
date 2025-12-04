@@ -1,450 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Taznia Tabassum Onon | Portfolio</title>
-    <meta
-      name="description"
-      content="Portfolio of Taznia Tabassum Onon – student at BRAC University, specializing in robotics, artificial intelligence, reinforcement learning, and frontend & app development."
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a href="#home" class="logo">Taznia<span>.</span></a>
-        <nav class="nav" id="nav">
-          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-            <span></span><span></span><span></span>
-          </button>
-          <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#achievements">Achievements</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
 
-    <main>
-      <!-- Hero -->
-      <section id="home" class="hero">
-        <div class="hero-bg">
-          <div class="hero-orb orb-1"></div>
-          <div class="hero-orb orb-2"></div>
-          <div class="hero-orb orb-3"></div>
-        </div>
-        <div class="container hero-inner reveal">
-          <div class="hero-text">
-            <p class="hero-kicker">Student · Robotics · AI · Frontend</p>
-            <h1>
-              Designing Intelligent Robots.
-              <br />
-              <span class="accent">Building Future‑Ready Experiences.</span>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taznia Tabassum Onon - AI & Robotics Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght%40400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome for the chat icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --star-color: rgba(255, 255, 255, 0.8);
+      --star-size: 1px;
+      --star-density: 100;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    #galaxy-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Custom scrollbar for aesthetic */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0d1117;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #4a5568;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6b46c1;
+    }
+
+    /* Sticky Navigation Bar Style */
+    #sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background-color: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(5px);
+    }
+
+    /* Focused section styling - Uses deep black/purple base */
+    .section-card {
+      background-color: rgba(10, 3, 15, 0.98);
+      backdrop-filter: blur(10px);
+      border-left: 4px solid;
+      border-color: #7e22ce;
+    }
+
+    .section-card:hover {
+      border-color: #d8b4fe;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 10px #e879f9, 0 0 20px #a78bfa;
+    }
+
+    /* Project Module Style - Uses deep black/purple base */
+    .project-module {
+      transition: all 0.3s ease;
+      border-radius: 0.75rem;
+      background: linear-gradient(135deg, rgba(5, 1, 8, 0.99), rgba(0, 0, 0, 0.99));
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 0, 255, 0.3);
+    }
+
+    .project-module:hover {
+      transform: translateY(-5px) scale(1.01);
+      border: 1px solid #d8b4fe;
+      box-shadow: 0 15px 40px rgba(192, 38, 211, 0.5);
+    }
+
+    /* Hero Title Container to allow multiple lines */
+    .hero-title-container {
+      display: flex;
+      flex-direction: column;
+      /* Stacked lines */
+      align-items: flex-start;
+    }
+
+    /* Row for Tabassum and Planet */
+    .name-row {
+      display: flex;
+      align-items: center;
+      /* Ensure minimal gap, negative margin handles overlap */
+      gap: 0px;
+      /* Tighter spacing between Taznia and Tabassum */
+      margin-top: -60px;
+    }
+
+    /* Restored previous planet size and position */
+    #planet-svg {
+      width: 180px;
+      height: 180px;
+      min-width: 90px;
+      margin-left: 10px;
+      /* Shifted slightly right on mobile */
+      margin-top: -20px;
+    }
+
+    @media (min-width: 640px) {
+      #planet-svg {
+        width: 240px;
+        height: 240px;
+        /* Shifted slightly right on desktop */
+        margin-left: 5px;
+        margin-top: -30px;
+      }
+    }
+
+    /* Chat Specific Styling */
+    #chat-window {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 6rem;
+      /* Above the chat button */
+      width: 100%;
+      max-width: 380px;
+      height: 450px;
+      z-index: 50;
+      background-color: #10061f;
+      /* Dark purple base */
+      border: 2px solid #a78bfa;
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(167, 139, 250, 0.5);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      transform: translateY(20px);
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chat-window.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      max-height: calc(450px - 100px);
+      /* Height minus header/input */
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.75rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .buddy-message {
+      background-color: #3b0764;
+      /* Deep purple for AI */
+      margin-right: auto;
+      border-bottom-left-radius: 0;
+    }
+
+    .user-message {
+      background-color: #065f46;
+      /* Dark green/teal for User */
+      margin-left: auto;
+      border-bottom-right-radius: 0;
+    }
+
+    /* Responsive placement for smaller screens */
+    @media (max-width: 640px) {
+      #chat-window {
+        right: 0.5rem;
+        bottom: 5rem;
+        max-width: calc(100% - 1rem);
+        height: 400px;
+      }
+    }
+
+    /* Neon Blue Chat Button Style */
+    .neon-blue-btn {
+      background-color: #00ffff;
+      /* Cyan/Neon Blue */
+      color: #000;
+      /* Text color for contrast */
+      box-shadow: 0 0 25px #00ffff, 0 0 40px rgba(0, 255, 255, 0.7);
+      /* Deep blue glow */
+    }
+
+    .neon-blue-btn:hover {
+      background-color: #33ffff;
+      transform: scale(1.08);
+      /* Slight extra scale on hover */
+    }
+  </style>
+</head>
+
+<body class="text-gray-100 min-h-screen">
+
+  <!-- Canvas for the animated galaxy background -->
+  <canvas id="galaxy-canvas"></canvas>
+
+  <div class="relative z-10">
+
+    <!-- Sticky Navigation Bar -->
+    <nav id="sticky-nav" class="w-full shadow-xl">
+      <div class="max-w-6xl mx-auto p-4 flex justify-center sm:justify-between items-center">
+        <a href="#home"
+          class="hidden sm:block text-xl font-bold text-purple-300 hover:text-purple-500 transition duration-300">T.T.
+          ONON</a>
+        <ul class="flex flex-wrap justify-center gap-4 sm:gap-6">
+          <li><a href="#home"
+              class="text-sm font-medium hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">Home</a>
+          </li>
+          <li><a href="#projects"
+              class="text-sm font-medium hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">Projects</a>
+          </li>
+          <li><a href="#skills"
+              class="text-sm font-medium hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">Skills</a>
+          </li>
+          <li><a href="#education"
+              class="text-sm font-medium hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">Education</a>
+          </li>
+          <li><a href="#contact"
+              class="text-sm font-medium hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="p-4 sm:p-8 max-w-6xl mx-auto">
+
+      <!-- Header/Hero Section -->
+      <header id="home" class="text-left py-16 mb-12">
+        <div class="space-y-4">
+          <!-- Title Container - now set to column for vertical stacking -->
+          <div class="hero-title-container">
+
+            <!-- Row 1: Taznia -->
+            <h1 class="text-6xl sm:text-8xl font-extrabold tracking-tighter glow-text leading-none">
+              Taznia
             </h1>
-            <p class="hero-subtitle">
-              I’m <strong>Taznia Tabassum Onon</strong>, a robotics and reinforcement learning
-              enthusiast who loves turning complex ideas into intuitive apps, intelligent robots,
-              and meaningful experiences.
-            </p>
-            <div class="hero-actions">
-              <a href="#projects" class="btn primary">View Projects</a>
-              <a href="#contact" class="btn ghost">Contact Me</a>
-            </div>
-            <div class="hero-meta">
-              <div>
-                <span class="meta-label">Current</span>
-                <span class="meta-value">BSc in CSE · BRAC University</span>
-              </div>
-              <div>
-                <span class="meta-label">Location</span>
-                <span class="meta-value">Dhaka, Bangladesh</span>
-              </div>
-            </div>
-          </div>
-          <div class="hero-card">
-            <div class="hero-badge">Open to opportunities</div>
-            <div class="hero-card-body">
-              <h2>Quick Snapshot</h2>
-              <ul>
-                <li>Robotics & reinforcement learning enthusiast</li>
-                <li>Experience with Flutter, ROS2, OpenCV, OpenAI Gym</li>
-                <li>Hands-on projects from face detection to quadruped robots</li>
-              </ul>
-              <div class="hero-links">
-                <a
-                  href="https://github.com/Taznia"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="chip"
-                  >GitHub</a
-                >
-                <a
-                  href="https://www.linkedin.com/in/taznia-tabassum-onon-b26436261/"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="chip"
-                  >LinkedIn</a
-                >
-                <a
-                  href="https://www.hackerrank.com/profile/Taznia_Tabassum"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="chip"
-                  >HackerRank (Silver)</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- About -->
-      <section id="about" class="section">
-        <div class="container section-inner two-column reveal">
-          <div>
-            <h2>About Me</h2>
-            <p>
-              I am a student at BRAC University pursuing a Bachelor of Science in Computer Science
-              and Engineering. I enjoy building things that live at the intersection of
-              <strong>robotics, machine learning, reinforcement learning, and user-focused
-              applications</strong>.
-            </p>
-            <p>
-              My work spans from intelligent robotic systems and control to web and mobile apps
-              with clean, minimal interfaces. I am particularly excited about combining
-              <strong>deep learning</strong> with <strong>robotics</strong> to create systems that
-              can learn and adapt to complex environments.
-            </p>
-            <p>
-              Outside academics, I actively participate in competitions, research-based projects,
-              and student leadership roles, continuously pushing my boundaries and learning by
-              doing.
-            </p>
-          </div>
-          <aside class="highlight-card">
-            <h3>At a Glance</h3>
-            <ul>
-              <li>🧠 Focus: Robotics, AI, Reinforcement Learning, Frontend</li>
-              <li>🎓 BRAC University · CSE · CGPA 3.77 (credits 84+)</li>
-              <li>🛠 Tools: TensorFlow, OpenCV, ROS, Flutter, Python, C++</li>
-              <li>💬 Ask me about Flutter, ROS2, robotics projects</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
+            <!-- Row 2: Tabassum + Planet Companion -->
+            <!-- name-row spacing adjusted in CSS for tighter fit -->
+            <div class="name-row">
+              <h1 class="text-6xl sm:text-8xl font-extrabold tracking-tighter glow-text leading-none">
+                Tabassum
+              </h1>
+              <!-- Interactive AI Character (SVG) - Positioned next to Tabassum -->
+              <div id="ai-companion" class="flex-shrink-0">
+                <!-- Restored previous sizing and positioning in CSS -->
+                <svg id="planet-svg" viewBox="0 0 200 240"
+                  class="drop-shadow-lg transition-transform hover:scale-[1.02]">
+                  <!-- The main planet body - purple/green glowing effect -->
+                  <defs>
+                    <!-- ANIMATED GRADIENT DEFINITION -->
+                    <radialGradient id="planet-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                      <stop offset="0%" id="grad-stop-1" style="stop-color:#e0aaff;stop-opacity:1">
+                        <animate attributeName="stop-color" values="#e0aaff;#ffddaa;#e0aaff" dur="5s"
+                          repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="50%" id="grad-stop-2" style="stop-color:#058760;stop-opacity:1">
+                        <animate attributeName="stop-color" values="#058760;#1e90ff;#058760" dur="5s"
+                          repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="100%" id="grad-stop-3" style="stop-color:#4a0082;stop-opacity:1">
+                        <animate attributeName="stop-color" values="#4a0082;#8a2be2;#4a0082" dur="5s"
+                          repeatCount="indefinite" />
+                      </stop>
+                    </radialGradient>
+                  </defs>
 
-      <!-- Education -->
-      <section id="education" class="section alt">
-        <div class="container section-inner reveal">
-          <h2>Education</h2>
-          <div class="timeline">
-            <article class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h3>BRAC University</h3>
-                  <span class="timeline-meta">2022 – Present · Dhaka, Bangladesh</span>
-                </div>
-                <p class="timeline-role">
-                  Bachelor of Science in Computer Science and Engineering
-                </p>
-                <p class="timeline-detail">CGPA: 3.77 · Credits completed: 84 (currently)</p>
-              </div>
-            </article>
-            <article class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h3>Motijheel Ideal School and College</h3>
-                  <span class="timeline-meta">2019 – 2021 · Science</span>
-                </div>
-                <p class="timeline-role">Higher Secondary School Certificate (HSC)</p>
-                <p class="timeline-detail">GPA: 5.00</p>
-              </div>
-            </article>
-            <article class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-content">
-                <div class="timeline-header">
-                  <h3>Ideal School and College, Mugda Branch</h3>
-                  <span class="timeline-meta">2018 – 2019 · Science</span>
-                </div>
-                <p class="timeline-role">Secondary School Certificate (SSC)</p>
-                <p class="timeline-detail">GPA: 4.94</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
+                  <!-- 2. Planet Circle with ANIMATED Gradient -->
+                  <circle cx="100" cy="100" r="90" fill="url(#planet-gradient)" />
 
-      <!-- Skills -->
-      <section id="skills" class="section">
-        <div class="container section-inner reveal">
-          <h2>Skills</h2>
-          <div class="skills-grid">
-            <div class="skills-group">
-              <h3>Programming & Development</h3>
-              <div class="chips">
-                <span class="chip">Python</span>
-                <span class="chip">C++</span>
-                <span class="chip">Flutter</span>
-                <span class="chip">Android App Development</span>
-                <span class="chip">Web Apps</span>
+                  <!-- 3. Highlight/Shine Effect (Realistic Gloss) -->
+                  <ellipse cx="50" cy="50" rx="15" ry="10" fill="white" opacity="0.7">
+                    <animate attributeName="opacity" values="0.7; 0.9; 0.7" dur="4s" repeatCount="indefinite" />
+                  </ellipse>
+
+                  <!-- Eyes Container - positioned slightly up -->
+                  <g id="eyes-container">
+                    <!-- Left Eye -->
+                    <circle id="eye-left-sclera" cx="75" cy="85" r="20" fill="white" stroke="#333" stroke-width="2"
+                      class="eye-sclera" />
+                    <circle cx="75" cy="85" r="15" fill="#00ffff" class="eye-iris" />
+                    <circle id="eye-left-pupil" cx="75" cy="85" r="7" fill="black" class="eye-pupil" data-center-x="75"
+                      data-center-y="85" data-eye-limit="10" />
+                    <circle cx="68" cy="78" r="3" fill="white" opacity="0.9" />
+
+                    <!-- Right Eye -->
+                    <circle id="eye-right-sclera" cx="125" cy="85" r="20" fill="white" stroke="#333" stroke-width="2"
+                      class="eye-sclera" />
+                    <circle cx="125" cy="85" r="15" fill="#00ffff" class="eye-iris" />
+                    <circle id="eye-right-pupil" cx="125" cy="85" r="7" fill="black" class="eye-pupil"
+                      data-center-x="125" data-center-y="85" data-eye-limit="10" />
+                    <circle cx="118" cy="78" r="3" fill="white" opacity="0.9" />
+                  </g>
+
+                  <!-- Interactive Mouth (Drawn by JavaScript) -->
+                  <path id="mouth-path" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" />
+                </svg>
               </div>
             </div>
-            <div class="skills-group">
-              <h3>AI, ML & Robotics</h3>
-              <div class="chips">
-                <span class="chip">Machine Learning</span>
-                <span class="chip">Reinforcement Learning</span>
-                <span class="chip">OpenAI Gym</span>
-                <span class="chip">OpenCV</span>
-                <span class="chip">Robotics</span>
-                <span class="chip">ROS / ROS2</span>
-              </div>
-            </div>
-            <div class="skills-group">
-              <h3>Design & Other</h3>
-              <div class="chips">
-                <span class="chip">Graphics Design</span>
-                <span class="chip">Team Leadership</span>
-                <span class="chip">Public Speaking & Events</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Projects -->
-      <section id="projects" class="section alt">
-        <div class="container section-inner reveal">
-          <h2>Selected Projects</h2>
-          <p class="section-intro">
-            A few projects that reflect my interests in robotics, AI, and user-focused applications.
+            <!-- Row 3: Onon -->
+            <h1 class="text-6xl sm:text-8xl font-extrabold tracking-tighter glow-text leading-none mt-[-60px]">
+              Onon
+            </h1>
+
+          </div>
+
+          <p class="max-w-3xl text-lg text-gray-400 pt-6">
+            A dedicated student translating academic excellence in CSE into high-impact, hands-on projects across
+            Robotics, ML, and App Development. Eager to solve complex challenges in dynamic, forward-thinking
+            environments.
           </p>
-          <div class="cards-grid">
-            <article class="card">
-              <h3>Axelia – Quadruped Robot Dog</h3>
-              <p class="card-tag">Robotics · Reinforcement Learning · Control</p>
-              <p>
-                Designing and developing a four-legged robot dog equipped with artificial
-                intelligence and reinforcement learning capabilities. Focused on stable locomotion,
-                environment sensing, and intelligent behavior.
-              </p>
-              <ul class="card-list">
-                <li>Exploring gait generation and control algorithms</li>
-                <li>Integrating sensors for perception and feedback</li>
-                <li>Using simulation tools alongside real-world testing</li>
-              </ul>
-            </article>
-
-            <article class="card">
-              <h3>Face Detection with OpenCV</h3>
-              <p class="card-tag">Computer Vision · Python · OpenCV</p>
-              <p>
-                Implemented a face detection pipeline using OpenCV, experimenting with classical
-                vision techniques and real-time video processing.
-              </p>
-              <ul class="card-list">
-                <li>Pre-processing and feature extraction from camera input</li>
-                <li>Real-time detection using traditional CV algorithms</li>
-              </ul>
-            </article>
-
-            <article class="card">
-              <h3>Smart Dustbin using Arduino</h3>
-              <p class="card-tag">Embedded Systems · IoT · Arduino</p>
-              <p>
-                Built a smart dustbin using an Arduino and distance sensor to enable contactless,
-                sensor-based lid operation for improved hygiene and usability.
-              </p>
-              <ul class="card-list">
-                <li>Programmed microcontroller logic for distance-based activation</li>
-                <li>Designed hardware setup and calibrated sensor thresholds</li>
-              </ul>
-            </article>
-
-            <article class="card">
-              <h3>Control & Graphics Design – Intellectium</h3>
-              <p class="card-tag">Design · Branding · Web Assets</p>
-              <p>
-                Content creator and graphics designer for Intellectium, contributing visuals and
-                branding assets used in events and online platforms.
-              </p>
-            </article>
-
-            <article class="card">
-              <h3>Android & Web Apps</h3>
-              <p class="card-tag">Flutter · Web Development</p>
-              <p>
-                Developed Android and web applications using Flutter and modern web technologies
-                with a focus on minimal, user-friendly interfaces.
-              </p>
-            </article>
-
-            <article class="card">
-              <h3>Reinforcement Learning Experiments</h3>
-              <p class="card-tag">RL · OpenAI Gym</p>
-              <p>
-                Implemented Q-learning and other RL algorithms in OpenAI Gym environments to learn
-                control policies from interaction.
-              </p>
-              <ul class="card-list">
-                <li>State and reward design for custom tasks</li>
-                <li>Visualization and evaluation of learned policies</li>
-              </ul>
-            </article>
-          </div>
-
-          <div class="projects-footer">
-            <span>More code & projects on GitHub:</span>
-            <a
-              href="https://github.com/Taznia"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-link"
-              >github.com/Taznia</a
-            >
-          </div>
         </div>
-      </section>
+      </header>
 
-      <!-- Achievements -->
-      <section id="achievements" class="section">
-        <div class="container section-inner reveal">
-          <h2>Achievements & Academic Excellence</h2>
-          <div class="two-column">
-            <div>
-              <h3>Highlights</h3>
-              <ul class="bullet-list">
-                <li>
-                  1st Runner-up in <strong>Extendars</strong>, a research-based competition by BRAC
-                  University Research for Development Club (BuReD)
-                </li>
-                <li>
-                  Campus ambassador for an international organization affiliated with the United
-                  Nations called <strong>Intellectium</strong>
-                </li>
-                <li>Team Lead of Social Media at <strong>Socchotor Proyash</strong> supported by BYLC</li>
-                <li>Cleared first round of international astronomy and astrophysics competition</li>
-                <li>Cleared multiple rounds of English writing competitions organized by reGrow</li>
-                <li>Participated in various programming contests and science olympiads</li>
+      <!-- Main Content: Single Column Layout -->
+      <main class="space-y-20">
+
+        <!-- Projects Section -->
+        <section id="projects" class="pt-10">
+          <h2 class="text-5xl font-extrabold mb-12 pb-4 text-center glow-text border-b-2 border-purple-500/50">
+            <span class="text-purple-400">01.</span> CORE PROJECTS
+          </h2>
+
+          <div class="space-y-10">
+
+            <!-- Project Card 1: Spot Mini AI Dog -->
+            <div class="project-module p-8 sm:p-12 flex flex-col lg:flex-row gap-8 section-card">
+              <div class="lg:w-2/3 space-y-4">
+                <h3 class="text-3xl font-bold text-purple-400">Spot Mini AI Dog (Robotics)</h3>
+                <p class="text-lg text-gray-300">
+                  Working on a four-legged robot dog (Spot Mini-like) equipped with advanced Artificial Intelligence and
+                  utilizing **Reinforcement Learning** for sophisticated movement, gait stability, and autonomous
+                  navigation. This is my central high-impact project.
+                </p>
+                <ul class="flex flex-wrap gap-3 pt-2">
+                  <li class="px-4 py-1 bg-purple-600/50 text-xs rounded-full font-semibold">Robotics</li>
+                  <li class="px-4 py-1 bg-purple-600/50 text-xs rounded-full font-semibold">Reinforcement Learning</li>
+                  <li class="px-4 py-1 bg-purple-600/50 text-xs rounded-full font-semibold">AI</li>
+                  <li class="px-4 py-1 bg-purple-600/50 text-xs rounded-full font-semibold">C++/Python</li>
+                </ul>
+              </div>
+              <div
+                class="lg:w-1/3 flex items-center justify-center bg-gray-900/50 p-6 rounded-lg border border-purple-600/50">
+                <span class="text-6xl" role="img" aria-label="Robot Icon">🤖</span>
+              </div>
+            </div>
+
+            <!-- Project Card 2: 3D Ant Training -->
+            <div class="project-module p-8 sm:p-12 flex flex-col lg:flex-row-reverse gap-8 section-card">
+              <div class="lg:w-2/3 space-y-4">
+                <h3 class="text-3xl font-bold text-purple-400">MuJoCo 3D Ant Training (RL)</h3>
+                <p class="text-lg text-gray-300">
+                  Trained a complex 3D ant model in the **MuJoCo** physics engine using the **OpenAI Gym** framework.
+                  This project involved setting up a custom RL environment and optimizing policy gradients to achieve
+                  stable, efficient locomotion.
+                </p>
+                <ul class="flex flex-wrap gap-3 pt-2">
+                  <li class="px-4 py-1 bg-blue-600/50 text-xs rounded-full font-semibold">OpenAI Gym</li>
+                  <li class="px-4 py-1 bg-blue-600/50 text-xs rounded-full font-semibold">MuJoCo</li>
+                  <li class="px-4 py-1 bg-blue-600/50 text-xs rounded-full font-semibold">Python</li>
+                </ul>
+              </div>
+              <div
+                class="lg:w-1/3 flex items-center justify-center bg-gray-900/50 p-6 rounded-lg border border-purple-600/50">
+                <span class="text-6xl" role="img" aria-label="Ant Icon">🐜</span>
+              </div>
+            </div>
+
+            <!-- Project Card 3: Frozen Lake Q-Learning -->
+            <div class="project-module p-8 sm:p-12 flex flex-col lg:flex-row gap-8 section-card">
+              <div class="lg:w-2/3 space-y-4">
+                <h3 class="text-3xl font-bold text-purple-400">Frozen Lake Solver (Q-Learning)</h3>
+                <p class="text-lg text-gray-300">
+                  Implemented and optimized the **Q-learning** algorithm to successfully solve the Frozen Lake
+                  environment (v-1). This foundational project validated core understanding of model-free reinforcement
+                  learning techniques.
+                </p>
+                <ul class="flex flex-wrap gap-3 pt-2">
+                  <li class="px-4 py-1 bg-green-600/50 text-xs rounded-full font-semibold">Q-Learning</li>
+                  <li class="px-4 py-1 bg-green-600/50 text-xs rounded-full font-semibold">OpenAI Gym</li>
+                  <li class="px-4 py-1 bg-green-600/50 text-xs rounded-full font-semibold">Data Structures</li>
+                </ul>
+              </div>
+              <div
+                class="lg:w-1/3 flex items-center justify-center bg-gray-900/50 p-6 rounded-lg border border-purple-600/50">
+                <span class="text-6xl" role="img" aria-label="Ice Cube Icon">🧊</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="pt-10">
+          <h2 class="text-5xl font-extrabold mb-12 pb-4 text-center glow-text border-b-2 border-purple-500/50">
+            <span class="text-purple-400">02.</span> TECHNICAL STACK
+          </h2>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-8 rounded-xl section-card">
+            <!-- Key Skills -->
+            <div class="p-4 rounded-lg bg-gray-800/70 text-purple-300 font-semibold border border-purple-700/50">
+              <span class="text-2xl">⚙️</span> Robotics (ROS)
+            </div>
+            <div class="p-4 rounded-lg bg-gray-800/70 text-purple-300 font-semibold border border-purple-700/50">
+              <span class="text-2xl">🧠</span> Reinforcement Learning (RL)
+            </div>
+            <div class="p-4 rounded-lg bg-gray-800/70 text-purple-300 font-semibold border border-purple-700/50">
+              <span class="text-2xl">🐍</span> Python / C++
+            </div>
+            <div class="p-4 rounded-lg bg-gray-800/70 text-purple-300 font-semibold border border-purple-700/50">
+              <span class="text-2xl">📱</span> Flutter / App Dev
+            </div>
+            <!-- Secondary Skills -->
+            <div class="p-4 rounded-lg bg-gray-800/70 text-gray-300 border border-gray-700/50">
+              <span class="text-2xl">👁️</span> OpenCV / Vision
+            </div>
+            <div class="p-4 rounded-lg bg-gray-800/70 text-gray-300 border border-gray-700/50">
+              <span class="text-2xl">🎨</span> Graphics Design
+            </div>
+            <div class="p-4 rounded-lg bg-gray-800/70 text-gray-300 border border-gray-700/50">
+              <span class="text-2xl">🏋️</span> OpenAI Gym / MuJoCo
+            </div>
+            <div class="p-4 rounded-lg bg-gray-800/70 text-gray-300 border border-gray-700/50">
+              <span class="text-2xl">🌐</span> Web Apps (HTML/Tailwind)
+            </div>
+          </div>
+
+          <div class="mt-8 p-6 rounded-xl section-card border-l-4 border-purple-600/50">
+            <h4 class="text-xl font-semibold mb-4 text-purple-300">Other Notable Tools & Experience:</h4>
+            <ul class="grid sm:grid-cols-2 gap-4 list-disc list-inside text-gray-400 ml-4">
+              <li>Face Detection with OpenCV.</li>
+              <li>Smart Dustbin prototype using Arduino.</li>
+              <li>Custom Color Detection algorithms.</li>
+              <li>Experienced in Freelancing and Coding Mentorship.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="pt-10">
+          <h2 class="text-5xl font-extrabold mb-12 pb-4 text-center glow-text border-b-2 border-purple-500/50">
+            <span class="text-purple-400">03.</span> ACADEMIC PATH
+          </h2>
+
+          <div class="space-y-8">
+            <!-- BRAC University -->
+            <div class="p-8 rounded-xl section-card shadow-lg">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+                <h3 class="text-3xl font-semibold text-purple-400">BRAC University</h3>
+                <p class="text-lg font-medium text-gray-300">2022 - Present</p>
+              </div>
+              <p class="text-xl text-gray-200 mb-1">Bachelor of Science in Computer Science and Engineering</p>
+              <p class="text-lg text-green-400 font-bold">Current CGPA: 3.77 (84 Credits)</p>
+              <p class="text-sm text-gray-400 mt-2">
+                **Academic Excellence:** Achieved scores of 97 in CSE350, 98 in CSE260, 97 in CSE330, and 95 in CSE331,
+                demonstrating strong mastery in core engineering subjects.
+              </p>
+            </div>
+
+            <!-- Secondary Education (Combined card for simplicity) -->
+            <div class="grid md:grid-cols-2 gap-8">
+              <div class="p-6 rounded-xl section-card shadow-md">
+                <h3 class="text-2xl font-semibold text-purple-400 mb-1">Motijheel Ideal School and College</h3>
+                <p class="text-md font-medium text-gray-300">2019 - 2021</p>
+                <p class="text-lg text-gray-200 mt-2">HSC (Science)</p>
+                <p class="text-md text-green-400 font-bold">GPA: 5.00</p>
+              </div>
+              <div class="p-6 rounded-xl section-card shadow-md">
+                <h3 class="text-2xl font-semibold text-purple-400 mb-1">Ideal School and College, Mugda</h3>
+                <p class="text-md font-medium text-gray-300">2018 - 2019</p>
+                <p class="text-lg text-gray-200 mt-2">SSC (Science)</p>
+                <p class="text-md text-green-400 font-bold">GPA: 4.94</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="py-10">
+          <h2 class="text-5xl font-extrabold mb-12 pb-4 text-center glow-text border-b-2 border-purple-500/50">
+            <span class="text-purple-400">04.</span> IMPACT & LEADERSHIP
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="p-8 rounded-xl section-card shadow-lg">
+              <h3 class="text-2xl font-semibold text-purple-300 mb-4 flex items-center gap-2">
+                🏆 Key Recognition
+              </h3>
+              <ul class="list-disc list-inside text-gray-300 space-y-3 ml-4">
+                <li>**1st Runner-up** in Extendiars, a competitive research event by BRAC University Research for
+                  Development Club (BuReD).</li>
+                <li>**Best Campus Ambassador** for Intellectium, an international organization affiliated with the
+                  United Nations.</li>
+                <li>HackerRank Profile: **Silver Badge**.</li>
               </ul>
             </div>
-            <aside>
-              <h3>Course Excellence</h3>
-              <p class="section-intro small">
-                Consistently high marks across core CSE, math, and science courses including:
-              </p>
-              <div class="chips chips-wrap small">
-                <span class="chip">CSE110</span>
-                <span class="chip">CSE111</span>
-                <span class="chip">CSE220</span>
-                <span class="chip">PHY111</span>
-                <span class="chip">STA201</span>
-                <span class="chip">BIO101</span>
-                <span class="chip">MAT215</span>
-                <span class="chip">CSE350</span>
-                <span class="chip">CSE250</span>
-                <span class="chip">CSE251</span>
-                <span class="chip">MAT216</span>
-                <span class="chip">CSE260</span>
-                <span class="chip">CSE331</span>
-                <span class="chip">CSE370</span>
-                <span class="chip">CSE330</span>
-              </div>
-            </aside>
+            <div class="p-8 rounded-xl section-card shadow-lg">
+              <h3 class="text-2xl font-semibold text-purple-300 mb-4 flex items-center gap-2">
+                ✨ Leadership & Outreach
+              </h3>
+              <ul class="list-disc list-inside text-gray-300 space-y-3 ml-4">
+                <li>**Team Lead (Social Media)** at Socchotar Proyash supported by BYLC.</li>
+                <li>**Content Creator / Graphics Designer** for Intellectium.</li>
+                <li>Project Assistant of marketing (Bangladesh) at Ecollab International.</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      <!-- Contact -->
-      <section id="contact" class="section alt">
-        <div class="container section-inner two-column reveal">
-          <div>
-            <h2>Let’s Connect</h2>
-            <p>
-              I am always excited to collaborate on projects related to robotics, AI, reinforcement
-              learning, and impactful apps. Feel free to reach out for research, internships, or
-              exciting new ideas.
-            </p>
-            <ul class="contact-list">
-              <li>
-                <span class="contact-label">Email</span>
-                <a href="mailto:tabassumtaznia5@bracu.ac.bd">tabassumtaznia5@bracu.ac.bd</a>
-              </li>
-              <li>
-                <span class="contact-label">Phone</span>
-                <a href="tel:+8801616749045">+880 1616-749045</a>
-              </li>
-              <li>
-                <span class="contact-label">Location</span>
-                <span>136/A South Mugda, Dhaka-1214, Bangladesh</span>
-              </li>
-            </ul>
-          </div>
-          <aside>
-            <h3>Online Profiles</h3>
-            <ul class="social-list">
-              <li>
-                <a
-                  href="https://github.com/Taznia"
-                  target="_blank"
-                  rel="noreferrer"
-                  >GitHub</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.linkedin.com/in/taznia-tabassum-onon-b26436261/"
-                  target="_blank"
-                  rel="noreferrer"
-                  >LinkedIn</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.hackerrank.com/profile/Taznia_Tabassum"
-                  target="_blank"
-                  rel="noreferrer"
-                  >HackerRank (Silver)</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.facebook.com/profile.php?id=100081747528862"
-                  target="_blank"
-                  rel="noreferrer"
-                  >Facebook</a
-                >
-              </li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-    </main>
+      <!-- Footer/Contact Section -->
+      <footer id="contact" class="mt-20 pt-12 border-t-4 border-purple-800/50 text-center section-card p-10 rounded-xl">
+        <h2 class="text-4xl font-extrabold mb-6 glow-text">CONTACT ME</h2>
+        <p class="text-xl text-gray-300 mb-8">Let's connect and build the future of AI and Robotics together.</p>
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <span>© <span id="year"></span> Taznia Tabassum Onon. All rights reserved.</span>
-        <span class="footer-tagline">Built with curiosity, robotics, and a lot of learning.</span>
+        <div class="flex justify-center flex-wrap gap-8 text-xl">
+          <a href="mailto:taznia.tabassum@g.bracu.ac.bd"
+            class="flex items-center gap-2 hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">
+            <span class="text-2xl">✉️</span> Email
+          </a>
+          <a href="tel:+8801616749045"
+            class="flex items-center gap-2 hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">
+            <span class="text-2xl">📞</span> Phone
+          </a>
+          <a href="https://www.linkedin.com/in/taznia-tabassum-onon-b26436261/" target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 hover:text-purple-400 transition duration-300 p-2 rounded-md hover:bg-purple-900/30">
+            <span class="text-2xl">🔗</span> LinkedIn
+          </a>
+        </div>
+
+        <p class="mt-12 text-sm text-gray-500">
+          &copy; 2024 Taznia Tabassum Onon. All rights reserved.
+        </p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- CHAT WIDGET START -->
+  <div id="chat-window" class="hidden">
+    <!-- Chat Header -->
+    <div class="p-4 flex justify-between items-center bg-purple-900/50 rounded-t-lg border-b border-purple-600">
+      <h3 class="text-lg font-bold text-white">Taznia's AI Buddy</h3>
+      <button id="chat-close-btn" class="text-white hover:text-red-400 transition">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Messages Area -->
+    <div id="chat-messages" class="flex flex-col space-y-2">
+      <!-- Messages will be appended here -->
+      <div id="loading-indicator" class="hidden text-center text-sm text-purple-300 mt-2">
+        <i class="fas fa-spinner fa-spin mr-2"></i> Thinking...
       </div>
-    </footer>
+    </div>
 
-    <script src="script.js"></script>
-  </body>
+    <!-- Input Area -->
+    <div class="p-4 border-t border-purple-600">
+      <div class="flex gap-2">
+        <input type="text" id="chat-input" placeholder="Ask about Taznia's projects..."
+          class="flex-grow p-2 rounded-lg bg-gray-800 text-white border border-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          onkeypress="if(event.key === 'Enter') document.getElementById('chat-send-btn').click()">
+        <button id="chat-send-btn"
+          class="bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-700 transition duration-200 disabled:bg-gray-500 disabled:cursor-not-allowed">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Chat Button: Now uses the custom neon-blue-btn class -->
+  <button id="chat-toggle-btn"
+    class="fixed bottom-4 right-4 p-4 rounded-full shadow-2xl transition duration-300 transform hover:scale-105 z-40 neon-blue-btn">
+    <i class="fas fa-comment-dots text-2xl"></i>
+  </button>
+  <!-- CHAT WIDGET END -->
+
+
+  <!-- JavaScript for Galaxy Animation, Eye Tracking, and Chat -->
+  <script>
+    // --- Gemini Chat Setup ---
+    const apiKey = "";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    let chatHistory = [];
+    let isSending = false;
+
+    // System Instruction defining the AI's persona and knowledge base
+    const systemInstruction = {
+      parts: [{
+        text: "You are 'Buddy,' an interactive AI companion for the portfolio of Taznia Tabassum Onon, a dedicated student specializing in Robotics, Reinforcement Learning, and App Development. Your goal is to be helpful, friendly, and informative. When answering questions, use only the information provided about Taznia's background, which includes: " +
+          "- **Major Focus:** Robotics, AI (Reinforcement Learning), and App Development (Flutter). " +
+          "- **Key Projects:** Spot Mini AI Dog (RL/Robotics), MuJoCo 3D Ant Training, Frozen Lake Q-Learning, Face detection (OpenCV), Smart Dustbin (Arduino), Content Creator/Graphics Designer for Intellectium. " +
+          "- **Skills:** Python, C++, ROS, Flutter, Machine Learning, OpenCV, Graphics Design, Web Apps, OpenAI Gym/MuJoCo. " +
+          "- **Academics:** BRAC University, CSE, CGPA 3.77 (84 Credits). Notable scores (97 in CSE350, 98 in CSE260, 97 in CSE330, and 95 in CSE331). " +
+          "- **Achievements:** 1st Runner-up in Extendiars (BuReD), Best Campus Ambassador for Intellectium, HackerRank Silver Badge. " +
+          "Keep answers concise and directly related to Taznia's portfolio. Do not invent information. If asked something outside this scope, suggest checking Taznia's contact information."
+      }]
+    };
+
+    // DOM elements
+    const chatWindow = document.getElementById('chat-window');
+    const chatToggleBtn = document.getElementById('chat-toggle-btn');
+    const chatCloseBtn = document.getElementById('chat-close-btn');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSendBtn = document.getElementById('chat-send-btn');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const aiCompanionDiv = document.getElementById('ai-companion'); // The container div
+    const planetSvg = document.getElementById('planet-svg'); // The SVG element
+
+    // Function to display a message in the chat UI
+    function displayMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', 'text-sm');
+
+      if (sender === 'buddy') {
+        msgDiv.classList.add('buddy-message', 'self-start');
+      } else {
+        msgDiv.classList.add('user-message', 'self-end');
+      }
+
+      msgDiv.textContent = text;
+      chatMessages.appendChild(msgDiv);
+      // Scroll to bottom
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Initialize chat with welcome message
+    function initializeChat() {
+      const welcomeMessage = "Hi, I am Buddy of Taznia. Do you need any help finding information about her projects or skills?";
+      displayMessage(welcomeMessage, 'buddy');
+      chatHistory.push({ role: "model", parts: [{ text: welcomeMessage }] });
+    }
+
+    // Exponential backoff utility
+    async function fetchWithRetry(url, options, retries = 3) {
+      for (let i = 0; i < retries; i++) {
+        try {
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            // Throw error to retry on server errors
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response;
+        } catch (error) {
+          if (i < retries - 1) {
+            const delay = Math.pow(2, i) * 1000;
+            await new Promise(resolve => setTimeout(resolve, delay));
+          } else {
+            throw error;
+          }
+        }
+      }
+    }
+
+
+    // Function to send message to Gemini API
+    async function sendMessage() {
+      const userText = chatInput.value.trim();
+      if (userText === "" || isSending) return;
+
+      // 1. Display user message and clear input
+      displayMessage(userText, 'user');
+      chatInput.value = '';
+
+      // 2. Add to history (User)
+      chatHistory.push({ role: "user", parts: [{ text: userText }] });
+
+      // 3. Update UI state (Loading)
+      isSending = true;
+      chatSendBtn.disabled = true;
+      loadingIndicator.classList.remove('hidden');
+
+      try {
+        const payload = {
+          contents: chatHistory,
+          systemInstruction: systemInstruction,
+        };
+
+        const response = await fetchWithRetry(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        const candidate = result.candidates?.[0];
+
+        if (candidate && candidate.content?.parts?.[0]?.text) {
+          const botResponse = candidate.content.parts[0].text;
+
+          // 4. Display bot message
+          displayMessage(botResponse, 'buddy');
+
+          // 5. Add to history (Model)
+          chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
+
+        } else {
+          displayMessage("Sorry, I encountered an issue. Could you please try again?", 'buddy');
+        }
+
+      } catch (error) {
+        console.error("Gemini API Error:", error);
+        displayMessage("Connection failed. Please check your network and try again.", 'buddy');
+      } finally {
+        // 6. Restore UI state
+        isSending = false;
+        chatSendBtn.disabled = false;
+        loadingIndicator.classList.add('hidden');
+      }
+    }
+
+    // --- Core Portfolio UI/UX Logic (Modified for faster 3D effect) ---
+
+    const canvas = document.getElementById('galaxy-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const stars = [];
+    const STAR_COUNT = 450;
+
+    // Define attractive mouth shapes
+    const MOUTH_HAPPY = "M 85 135 Q 100 150, 115 135"; // Wider, deeper smile
+    const MOUTH_SAD = "M 85 145 Q 100 130, 115 145";  // Inverted curve (frown)
+
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    // Star object constructor
+    function Star(x, y, radius, velocity) {
+      this.x = x || Math.random() * width;
+      this.y = y || Math.random() * height;
+
+      // Generate a random radius (depth marker)
+      this.radius = radius || Math.random() * 1.5 + 0.5;
+
+      // Base speed for all stars, increased from previous version
+      const baseSpeed = 0.5;
+
+      // Calculate speed based on radius for 3D parallax effect
+      // Larger stars (closer) move faster.
+      const speedMultiplier = this.radius * 0.5; // Adjusted multiplier
+      const speed = baseSpeed * speedMultiplier;
+
+      // Random direction, scaled by the calculated speed
+      const directionX = (Math.random() - 0.5) * speed;
+      const directionY = (Math.random() - 0.5) * speed;
+
+      this.velocity = velocity || { x: directionX, y: directionY };
+      this.opacity = Math.random();
+    }
+
+    Star.prototype.draw = function () {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.shadowBlur = 3;
+      ctx.shadowColor = 'rgba(232, 121, 249, 0.5)';
+      ctx.fill();
+    };
+
+    Star.prototype.update = function () {
+      this.x += this.velocity.x;
+      this.y += this.velocity.y;
+
+      // Loop stars back when they exit the screen
+      if (this.x < 0) this.x = width;
+      if (this.x > width) this.x = 0;
+      if (this.y < 0) this.y = height;
+      if (this.y > height) this.y = 0;
+
+      this.opacity += (Math.random() - 0.5) * 0.03;
+      if (this.opacity > 1) this.opacity = 1;
+      if (this.opacity < 0.1) this.opacity = 0.1;
+
+      this.draw();
+    };
+
+    function initStars() {
+      stars.length = 0;
+      for (let i = 0; i < STAR_COUNT; i++) {
+        stars.push(new Star());
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      // Clear canvas with a very slight transparency to create a tail/motion blur effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+      ctx.fillRect(0, 0, width, height);
+
+      stars.forEach(star => star.update());
+    }
+
+    function trackEyes(event) {
+      const eyePupils = document.querySelectorAll('.eye-pupil');
+
+      eyePupils.forEach(pupil => {
+        const svg = pupil.closest('svg');
+        if (!svg) return;
+
+        const svgRect = svg.getBoundingClientRect();
+
+        const pupilCenterX = parseFloat(pupil.getAttribute('data-center-x'));
+        const pupilCenterY = parseFloat(pupil.getAttribute('data-center-y'));
+        const maxMove = parseFloat(pupil.getAttribute('data-eye-limit')) || 10;
+
+        const scaleX = svgRect.width / 200;
+        const scaleY = svgRect.height / 240;
+
+        const mouseXLocal = (event.clientX - svgRect.left) / scaleX;
+        const mouseYLocal = (event.clientY - svgRect.top) / scaleY;
+
+        const dx = mouseXLocal - pupilCenterX;
+        const dy = mouseYLocal - pupilCenterY;
+
+        const angle = Math.atan2(dy, dx);
+
+        const distance = Math.min(Math.sqrt(dx * dx + dy * dy), maxMove);
+
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+
+        pupil.setAttribute('transform', `translate(${tx}, ${ty})`);
+      });
+    }
+
+    // Function to set the planet to the "sad" state
+    function makePlanetSad() {
+      const mouthPath = document.getElementById('mouth-path');
+      if (mouthPath) {
+        mouthPath.setAttribute('d', MOUTH_SAD);
+      }
+    }
+
+    // Function to set the planet to the "happy" state
+    function makePlanetHappy() {
+      const mouthPath = document.getElementById('mouth-path');
+      if (mouthPath) {
+        mouthPath.setAttribute('d', MOUTH_HAPPY);
+      }
+    }
+
+
+    // --- Event Listeners and Initialization ---
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initStars();
+    });
+
+    window.onload = function () {
+      resizeCanvas();
+      initStars();
+      animate();
+
+      // Eye tracking listener
+      window.addEventListener('mousemove', trackEyes);
+
+      // Interactive Mouth Logic (FIXED: Attaching listener directly to the SVG/planet)
+      const mouthPath = document.getElementById('mouth-path');
+
+      if (mouthPath) {
+        mouthPath.setAttribute('d', MOUTH_HAPPY);
+
+        // Attach listeners directly to the SVG element for precise hover detection
+        planetSvg.addEventListener('mouseenter', makePlanetSad);
+        planetSvg.addEventListener('mouseleave', makePlanetHappy);
+      }
+
+      // Chat Listeners
+      chatToggleBtn.addEventListener('click', () => {
+        chatWindow.classList.toggle('hidden');
+        chatWindow.classList.toggle('open');
+        if (chatHistory.length === 0) {
+          initializeChat();
+        }
+      });
+
+      chatCloseBtn.addEventListener('click', () => {
+        chatWindow.classList.add('hidden');
+        chatWindow.classList.remove('open');
+      });
+
+      chatSendBtn.addEventListener('click', sendMessage);
+    };
+  </script>
+</body>
+
 </html>
-
-
