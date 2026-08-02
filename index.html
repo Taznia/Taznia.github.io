@@ -483,376 +483,252 @@
       background: linear-gradient(180deg, transparent, rgba(168, 85, 247, 0.03), rgba(168, 85, 247, 0.06));
     }
 
-    /* ===================== VIDEO SHOWCASE ===================== */
-    .video-showcase-grid {
+    /* ===================== PROJECT VIDEO CARDS (sidebar layout) ===================== */
+
+    .proj-video-card {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-    @media (max-width: 768px) {
-      .video-showcase-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Featured card spans full width */
-    .video-card-featured {
-      grid-column: 1 / -1;
-    }
-
-    .video-card {
-      position: relative;
+      grid-template-columns: 1fr 1fr;
       border-radius: 24px;
       overflow: hidden;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
+      min-height: 280px;
+    }
+    .proj-video-card:hover {
+      border-color: rgba(168,85,247,0.35);
+      box-shadow: 0 0 50px rgba(168,85,247,0.08), 0 24px 60px rgba(0,0,0,0.4);
+      transform: translateY(-4px);
+    }
+    .proj-video-card.is-playing {
+      border-color: rgba(0,240,255,0.45);
+      box-shadow: 0 0 0 1px rgba(0,240,255,0.15), 0 0 60px rgba(0,240,255,0.1), 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    /* ── VIDEO SIDE (left) ── */
+    .proj-video-side {
+      position: relative;
+      overflow: hidden;
+      background: #000;
       cursor: pointer;
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                  border-color 0.4s, box-shadow 0.4s;
+      min-height: 260px;
     }
-    .video-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      border-color: rgba(168, 85, 247, 0.45);
-      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.2),
-                  0 30px 70px rgba(0, 0, 0, 0.5),
-                  0 0 60px rgba(168, 85, 247, 0.08);
-    }
-    .video-card:focus-within {
-      border-color: rgba(0, 240, 255, 0.5);
-      box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.15);
-    }
-
-    /* Glow ring on active/playing */
-    .video-card.is-playing {
-      border-color: rgba(0, 240, 255, 0.5);
-      box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.2),
-                  0 0 50px rgba(0, 240, 255, 0.12),
-                  0 30px 70px rgba(0, 0, 0, 0.5);
-    }
-
-    .video-card video {
+    .proj-video {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: filter 0.4s;
+      transition: filter 0.4s, transform 0.6s;
     }
-    .video-card:not(.is-playing) video {
-      filter: brightness(0.55) saturate(1.1);
+    .proj-video-card:not(.is-playing) .proj-video {
+      filter: brightness(0.5) saturate(1.1);
     }
-    .video-card.is-playing video {
-      filter: brightness(1) saturate(1.15);
+    .proj-video-card.is-playing .proj-video {
+      filter: brightness(1) saturate(1.1);
     }
-
-    /* Aspect ratios */
-    .video-card-featured .video-wrapper {
-      aspect-ratio: 16 / 7;
-      min-height: 280px;
-    }
-    .video-card:not(.video-card-featured) .video-wrapper {
-      aspect-ratio: 16 / 10;
-      min-height: 220px;
-    }
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-    }
-    .video-wrapper video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .proj-video-card:hover .proj-video {
+      transform: scale(1.03);
     }
 
-    /* Scanline texture overlay */
-    .video-card::before {
-      content: '';
+    /* dark gradient over video bottom */
+    .proj-video-overlay {
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(0, 0, 0, 0.04) 3px,
-        rgba(0, 0, 0, 0.04) 4px
-      );
+      background: linear-gradient(135deg, rgba(3,0,20,0.15) 0%, rgba(3,0,20,0.55) 100%);
       pointer-events: none;
-      z-index: 3;
-      opacity: 0.5;
+      z-index: 1;
       transition: opacity 0.4s;
     }
-    .video-card.is-playing::before {
+    .proj-video-card.is-playing .proj-video-overlay {
       opacity: 0.2;
     }
 
-    /* Gradient overlay that fades on play */
-    .video-overlay {
+    /* Big centre play icon */
+    .proj-center-play {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(3, 0, 20, 0.92) 0%,
-        rgba(3, 0, 20, 0.35) 45%,
-        transparent 100%
-      );
-      transition: opacity 0.5s ease;
-      z-index: 4;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.22);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
       pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
     }
-    .video-card.is-playing .video-overlay {
-      opacity: 0.35;
+    .proj-video-card.is-playing .proj-center-play {
+      opacity: 0;
+      transform: translate(-50%,-50%) scale(0.75);
     }
 
-    /* Neon border sweep animation */
-    .video-card::after {
-      content: '';
+    /* Mute button */
+    .proj-mute-btn {
       position: absolute;
-      inset: -1px;
-      border-radius: 24px;
-      background: conic-gradient(
-        from var(--angle, 0deg),
-        transparent 0deg,
-        rgba(168, 85, 247, 0.6) 60deg,
-        rgba(0, 240, 255, 0.5) 120deg,
-        transparent 180deg
-      );
-      z-index: 0;
+      top: 0.75rem; right: 0.75rem;
+      z-index: 4;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
       opacity: 0;
-      transition: opacity 0.4s;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      -webkit-mask-composite: destination-out;
-      padding: 1px;
-      pointer-events: none;
-      animation: border-sweep 3s linear infinite;
     }
-    .video-card:hover::after,
-    .video-card.is-playing::after {
+    .proj-video-side:hover .proj-mute-btn,
+    .proj-video-card.is-playing .proj-mute-btn {
       opacity: 1;
     }
-    @property --angle {
-      syntax: '<angle>';
-      initial-value: 0deg;
-      inherits: false;
-    }
-    @keyframes border-sweep {
-      to { --angle: 360deg; }
+    .proj-mute-btn:hover {
+      background: rgba(168,85,247,0.35);
+      border-color: rgba(168,85,247,0.5);
+      color: #fff;
     }
 
-    /* Content block at bottom */
-    .video-meta {
+    /* Progress bar at bottom of video side */
+    .proj-progress-wrap {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      padding: 1.5rem 1.5rem 1.4rem;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-    .video-card-featured .video-meta {
-      padding: 2rem 2rem 1.8rem;
+    .proj-video-card.is-playing .proj-progress-wrap {
+      opacity: 1;
+    }
+    .proj-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+      border-radius: 0 2px 2px 0;
     }
 
-    .video-category {
+    /* ── INFO SIDE (right sidebar) ── */
+    .proj-info-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.85rem;
+      padding: 2rem 1.75rem;
+      background: rgba(3,0,20,0.6);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .proj-category {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
-      padding: 0.25rem 0.75rem;
+      padding: 0.22rem 0.7rem;
       border-radius: 999px;
       width: fit-content;
-      backdrop-filter: blur(8px);
     }
-    .video-category.purple {
-      background: rgba(168, 85, 247, 0.2);
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      color: #d8b4fe;
-    }
-    .video-category.cyan {
-      background: rgba(0, 240, 255, 0.12);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      color: #67e8f9;
-    }
-    .video-category.pink {
-      background: rgba(236, 72, 153, 0.15);
-      border: 1px solid rgba(236, 72, 153, 0.3);
-      color: #f9a8d4;
-    }
-    .video-category.green {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.25);
-      color: #86efac;
-    }
+    .proj-category.purple { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); color: #d8b4fe; }
+    .proj-category.cyan   { background: rgba(0,240,255,0.1);   border: 1px solid rgba(0,240,255,0.25);  color: #67e8f9; }
+    .proj-category.pink   { background: rgba(236,72,153,0.12); border: 1px solid rgba(236,72,153,0.28); color: #f9a8d4; }
+    .proj-category.green  { background: rgba(34,197,94,0.1);   border: 1px solid rgba(34,197,94,0.22);  color: #86efac; }
 
-    .video-title {
+    .proj-title {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: #fff;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-    }
-    .video-card-featured .video-title {
-      font-size: 1.5rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
     }
 
-    .video-desc {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-      max-width: 42rem;
+    .proj-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
     }
 
-    .video-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.25rem;
-    }
-    .video-tags {
+    .proj-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
     }
-    .video-tag {
-      font-size: 0.65rem;
+    .ptag {
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       padding: 0.2rem 0.6rem;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
     }
+    .ptag.purple { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.2); color: #c4b5fd; }
+    .ptag.cyan   { background: rgba(0,240,255,0.08);  border: 1px solid rgba(0,240,255,0.18);  color: #67e8f9; }
+    .ptag.pink   { background: rgba(236,72,153,0.1);  border: 1px solid rgba(236,72,153,0.2);  color: #f9a8d4; }
+    .ptag.green  { background: rgba(34,197,94,0.08);  border: 1px solid rgba(34,197,94,0.18);  color: #86efac; }
 
-    /* Play / pause button */
-    .video-play-btn {
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #fff;
-      font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: all 0.25s;
-      flex-shrink: 0;
-      z-index: 6;
-    }
-    .video-play-btn:hover {
-      background: rgba(168, 85, 247, 0.35);
-      border-color: rgba(168, 85, 247, 0.6);
-      transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
-    }
-    .video-card-featured .video-play-btn {
-      width: 54px; height: 54px;
-      font-size: 1.15rem;
-    }
-
-    /* Central big play icon (hidden when playing) */
-    .video-center-play {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 6;
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff;
-      font-size: 1.6rem;
-      pointer-events: none;
-      transition: opacity 0.35s, transform 0.35s;
-    }
-    .video-card-featured .video-center-play {
-      width: 88px; height: 88px;
-      font-size: 2rem;
-    }
-    .video-card.is-playing .video-center-play {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-
-    /* Mute button top-right */
-    .video-mute-btn {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      z-index: 7;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.65);
-      font-size: 0.8rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: all 0.25s;
-      opacity: 0;
-    }
-    .video-card:hover .video-mute-btn,
-    .video-card.is-playing .video-mute-btn {
-      opacity: 1;
-    }
-    .video-mute-btn:hover {
-      background: rgba(168, 85, 247, 0.3);
-      border-color: rgba(168, 85, 247, 0.5);
-      color: #fff;
-    }
-
-    /* Progress bar */
-    .video-progress-wrap {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: rgba(255,255,255,0.1);
-      z-index: 8;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .video-card.is-playing .video-progress-wrap {
-      opacity: 1;
-    }
-    .video-progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
-      transition: width 0.5s linear;
-      border-radius: 0 2px 2px 0;
-    }
-
-    /* Section divider label */
-    .video-section-label {
-      display: flex;
+    /* Play button inside info sidebar */
+    .proj-play-btn {
+      display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+      width: fit-content;
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(168,85,247,0.15);
+      border: 1px solid rgba(168,85,247,0.35);
+      color: #d8b4fe;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.25s;
     }
-    .video-section-label span {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(168, 85, 247, 0.8);
+    .proj-play-btn:hover {
+      background: rgba(168,85,247,0.3);
+      border-color: rgba(168,85,247,0.6);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(168,85,247,0.2);
     }
-    .video-section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(168,85,247,0.3), transparent);
+    .proj-video-card.is-playing .proj-play-btn {
+      background: rgba(0,240,255,0.12);
+      border-color: rgba(0,240,255,0.35);
+      color: #67e8f9;
     }
-    /* =================== END VIDEO SHOWCASE =================== */
+    .proj-video-card.is-playing .proj-play-btn .btn-label::before {
+      content: 'Pause';
+    }
+    .proj-video-card:not(.is-playing) .proj-play-btn .btn-label::before {
+      content: 'Play Demo';
+    }
+    .proj-play-btn .btn-label { font-size: 0;} /* hide original text, use ::before */
+
+    /* Responsive: stack on mobile */
+    @media (max-width: 700px) {
+      .proj-video-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: 220px auto;
+      }
+      .proj-video-side {
+        min-height: 220px;
+      }
+      .proj-info-side {
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding: 1.5rem;
+      }
+    }
+    /* =================== END PROJECT VIDEO CARDS =================== */
   </style>
 </head>
 
@@ -876,7 +752,6 @@
         <ul class="hidden sm:flex items-center gap-1">
           <li><a href="#home" class="nav-link">Home</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#videos" class="nav-link">Demos</a></li>
           <li><a href="#experience" class="nav-link">Experience</a></li>
           <li><a href="#skills" class="nav-link">Skills</a></li>
           <li><a href="#education" class="nav-link">Education</a></li>
@@ -893,7 +768,6 @@
         <div class="flex flex-wrap gap-2">
           <a href="#home" class="nav-link">Home</a>
           <a href="#projects" class="nav-link">Projects</a>
-          <a href="#videos" class="nav-link">Demos</a>
           <a href="#experience" class="nav-link">Experience</a>
           <a href="#skills" class="nav-link">Skills</a>
           <a href="#education" class="nav-link">Education</a>
@@ -983,189 +857,155 @@
             <div class="flex-1 section-line"></div>
           </div>
 
-          <div class="space-y-4">
+          <div class="space-y-6">
+
+            <!-- ── Game Dev: Adventure of Sui ── VIDEO CARD ── -->
+            <article class="proj-video-card fade-up">
+              <div class="proj-video-side">
+                <video class="proj-video" src="VIDEOS/ADVENTURE OF SUI.mp4" muted playsinline preload="metadata" loop></video>
+                <div class="proj-video-overlay"></div>
+                <div class="proj-center-play"><i class="fas fa-play"></i></div>
+                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
+              </div>
+              <div class="proj-info-side">
+                <div class="proj-category purple"><i class="fas fa-gamepad"></i> Game Dev</div>
+                <h3 class="proj-title">Adventure of Sui</h3>
+                <p class="proj-desc">A hand-crafted 2D adventure game built in Godot — featuring custom physics, sprite animations, and an original level design pipeline. Deployed at Onnesok.</p>
+                <div class="proj-tags">
+                  <span class="ptag purple">Godot</span>
+                  <span class="ptag purple">GDScript</span>
+                  <span class="ptag purple">2D Physics</span>
+                  <span class="ptag purple">Level Design</span>
+                </div>
+                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+              </div>
+            </article>
+
+            <!-- ── Game Dev: ShooterX ── VIDEO CARD ── -->
+            <article class="proj-video-card fade-up">
+              <div class="proj-video-side">
+                <video class="proj-video" src="VIDEOS/shooterx.mp4" muted playsinline preload="metadata" loop></video>
+                <div class="proj-video-overlay"></div>
+                <div class="proj-center-play"><i class="fas fa-play"></i></div>
+                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
+              </div>
+              <div class="proj-info-side">
+                <div class="proj-category pink"><i class="fas fa-crosshairs"></i> Game Dev</div>
+                <h3 class="proj-title">ShooterX</h3>
+                <p class="proj-desc">Fast-paced top-down shooter with procedural enemy AI, dynamic difficulty scaling, and a custom weapon system built entirely in Godot Engine.</p>
+                <div class="proj-tags">
+                  <span class="ptag pink">Godot</span>
+                  <span class="ptag pink">Enemy AI</span>
+                  <span class="ptag pink">Procedural</span>
+                  <span class="ptag pink">Game Design</span>
+                </div>
+                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+              </div>
+            </article>
+
+            <!-- ── UI/UX Vol. 1 ── VIDEO CARD ── -->
+            <article class="proj-video-card fade-up">
+              <div class="proj-video-side">
+                <video class="proj-video" src="VIDEOS/UIUX1.mp4" muted playsinline preload="metadata" loop></video>
+                <div class="proj-video-overlay"></div>
+                <div class="proj-center-play"><i class="fas fa-play"></i></div>
+                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
+              </div>
+              <div class="proj-info-side">
+                <div class="proj-category cyan"><i class="fas fa-layer-group"></i> UI / UX</div>
+                <h3 class="proj-title">Mobile App UI — Vol. 1</h3>
+                <p class="proj-desc">Interactive mobile UI prototype featuring smooth micro-interactions, gesture-based navigation, and a cohesive design system. Built with Flutter and Figma.</p>
+                <div class="proj-tags">
+                  <span class="ptag cyan">Flutter</span>
+                  <span class="ptag cyan">Figma</span>
+                  <span class="ptag cyan">Motion Design</span>
+                  <span class="ptag cyan">Firebase</span>
+                </div>
+                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+              </div>
+            </article>
+
+            <!-- ── UI/UX Vol. 2 ── VIDEO CARD ── -->
+            <article class="proj-video-card fade-up">
+              <div class="proj-video-side">
+                <video class="proj-video" src="VIDEOS/UI_UX2.mp4" muted playsinline preload="metadata" loop></video>
+                <div class="proj-video-overlay"></div>
+                <div class="proj-center-play"><i class="fas fa-play"></i></div>
+                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
+              </div>
+              <div class="proj-info-side">
+                <div class="proj-category green"><i class="fas fa-mobile-alt"></i> UI / UX</div>
+                <h3 class="proj-title">Mobile App UI — Vol. 2</h3>
+                <p class="proj-desc">Second-generation UI explorations — dark-mode flows, onboarding sequences, and component-level animation polish for HireApp and Learners platforms.</p>
+                <div class="proj-tags">
+                  <span class="ptag green">Flutter</span>
+                  <span class="ptag green">Dark Mode</span>
+                  <span class="ptag green">Onboarding</span>
+                  <span class="ptag green">Firebase</span>
+                </div>
+                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+              </div>
+            </article>
+
+            <!-- ── Bionic Arm ── TEXT CARD ── -->
             <article class="glass-card p-6 fade-up">
               <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600/20 to-cyan-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🦾</div>
                 <div class="flex-1">
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">AI-Powered Bionic Arm with Sensory Feedback</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python, ML, Embedded Systems</span>
+                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">AI-Powered Bionic Arm with Sensory Feedback</h3>
+                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · ML · Embedded Systems</span>
                   </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Designed and implemented an AI-powered bionic prosthetic arm featuring real-time sensory feedback mechanisms. Integrated machine learning algorithms with embedded control systems for adaptive and intuitive grasp patterns.</p>
+                  <p class="text-white/50 text-sm leading-relaxed">Designed and implemented an AI-powered bionic prosthetic arm featuring real-time sensory feedback. Integrated machine learning algorithms with embedded control systems for adaptive grasp patterns. Won Gold Award at IEEE R10 HTC.</p>
                 </div>
               </div>
             </article>
+
+            <!-- ── Quadruped Robot ── TEXT CARD ── -->
             <article class="glass-card p-6 fade-up">
               <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-600/20 to-purple-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🐕</div>
                 <div class="flex-1">
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Quadruped Robot (AI-Based Robotic Dog)</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python, RL, MuJoCo</span>
+                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">Quadruped Robot — AI Robotic Dog</h3>
+                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · RL · MuJoCo</span>
                   </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Developed a four-legged robotic dog simulation using MuJoCo physics engine for stable terrain locomotion and reinforcement learning policies for walking, balancing, and obstacle avoidance.</p>
+                  <p class="text-white/50 text-sm leading-relaxed">Developed a four-legged robotic dog simulation using MuJoCo physics engine. Trained reinforcement learning policies for walking, balancing, and obstacle avoidance on complex terrain.</p>
                 </div>
               </div>
             </article>
+
+            <!-- ── RL Simulations ── TEXT CARD ── -->
             <article class="glass-card p-6 fade-up">
               <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-600/20 to-green-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🧠</div>
                 <div class="flex-1">
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Reinforcement Learning Simulations</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python, Q-Learning, OpenAI Gym</span>
+                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">Reinforcement Learning Simulations</h3>
+                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · Q-Learning · OpenAI Gym</span>
                   </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Built and trained reinforcement learning agents across custom and benchmark environments using OpenAI Gym, including Q-Learning and deep reinforcement learning approaches.</p>
+                  <p class="text-white/50 text-sm leading-relaxed">Built and trained RL agents across custom and benchmark environments using OpenAI Gym, including Q-Learning and deep RL approaches for autonomous decision-making.</p>
                 </div>
               </div>
             </article>
+
+            <!-- ── Face Detection ── TEXT CARD ── -->
             <article class="glass-card p-6 fade-up">
               <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                 <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-600/20 to-cyan-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">👁️</div>
                 <div class="flex-1">
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Face Detection System</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python, OpenCV</span>
+                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">Real-Time Face Detection System</h3>
+                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · OpenCV</span>
                   </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Developed a real-time face detection and tracking application using OpenCV, with optimized pipelines for low-latency processing and accurate multi-face tracking.</p>
+                  <p class="text-white/50 text-sm leading-relaxed">Real-time face detection and tracking using OpenCV with optimized pipelines for low-latency processing and accurate multi-face tracking across video streams.</p>
                 </div>
               </div>
             </article>
-            <article class="glass-card p-6 fade-up">
-              <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-600/20 to-purple-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">📱</div>
-                <div class="flex-1">
-                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Mobile & Web Applications</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Flutter, Firebase</span>
-                  </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Developed cross-platform mobile and web applications including Learners and HireApp using Flutter, with real-time databases, authentication, and Firebase cloud services.</p>
-                </div>
-              </div>
-            </article>
-            <article class="glass-card p-6 fade-up">
-              <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-600/20 to-purple-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🎮</div>
-                <div class="flex-1">
-                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Game Development</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Godot, UI/UX</span>
-                  </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Designed and developed interactive 2D/3D games including ShooterX, Sky Ball, and Adventure of Sui using the Godot engine, with fluid physics and immersive UI.</p>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <!-- ==================== VIDEO SHOWCASE ==================== -->
-        <section id="videos" class="fade-up">
-          <div class="flex items-center gap-4 mb-6">
-            <span class="section-number text-sm">01b</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">Project Demos</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
-          <p class="text-white/35 text-sm mb-10 max-w-xl">A live look at selected builds — hover to preview, click to play.</p>
-
-          <div class="video-showcase-grid">
-
-            <!-- FEATURED: Adventure of Sui -->
-            <div class="video-card video-card-featured fade-up" data-video-id="sui">
-              <div class="video-wrapper">
-                <video src="VIDEOS/ADVENTURE OF SUI.mp4" muted playsinline preload="metadata" loop></video>
-              </div>
-              <div class="video-overlay"></div>
-              <div class="video-center-play"><i class="fas fa-play"></i></div>
-              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
-              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-              <div class="video-meta">
-                <span class="video-category purple"><i class="fas fa-gamepad"></i> Game Dev</span>
-                <h3 class="video-title">Adventure of Sui</h3>
-                <p class="video-desc">A hand-crafted 2D adventure game built in Godot — featuring custom physics, sprite animations, and an original level design pipeline.</p>
-                <div class="video-footer">
-                  <div class="video-tags">
-                    <span class="video-tag">Godot</span>
-                    <span class="video-tag">GDScript</span>
-                    <span class="video-tag">2D Physics</span>
-                    <span class="video-tag">Level Design</span>
-                  </div>
-                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- ShooterX -->
-            <div class="video-card fade-up" data-video-id="shooterx">
-              <div class="video-wrapper">
-                <video src="VIDEOS/shooterx.mp4" muted playsinline preload="metadata" loop></video>
-              </div>
-              <div class="video-overlay"></div>
-              <div class="video-center-play"><i class="fas fa-play"></i></div>
-              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
-              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-              <div class="video-meta">
-                <span class="video-category pink"><i class="fas fa-crosshairs"></i> Game Dev</span>
-                <h3 class="video-title">ShooterX</h3>
-                <p class="video-desc">Fast-paced top-down shooter with procedural enemy AI and dynamic difficulty scaling.</p>
-                <div class="video-footer">
-                  <div class="video-tags">
-                    <span class="video-tag">Godot</span>
-                    <span class="video-tag">Enemy AI</span>
-                    <span class="video-tag">Procedural</span>
-                  </div>
-                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- UI/UX 1 -->
-            <div class="video-card fade-up" data-video-id="uiux1">
-              <div class="video-wrapper">
-                <video src="VIDEOS/UIUX1.mp4" muted playsinline preload="metadata" loop></video>
-              </div>
-              <div class="video-overlay"></div>
-              <div class="video-center-play"><i class="fas fa-play"></i></div>
-              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
-              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-              <div class="video-meta">
-                <span class="video-category cyan"><i class="fas fa-layer-group"></i> UI/UX</span>
-                <h3 class="video-title">App UI Design — Vol. 1</h3>
-                <p class="video-desc">Interactive mobile UI prototype — smooth micro-interactions, gesture navigation, and a cohesive design system built for Flutter.</p>
-                <div class="video-footer">
-                  <div class="video-tags">
-                    <span class="video-tag">Flutter</span>
-                    <span class="video-tag">Figma</span>
-                    <span class="video-tag">Motion</span>
-                  </div>
-                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <!-- UI/UX 2 -->
-            <div class="video-card fade-up" data-video-id="uiux2">
-              <div class="video-wrapper">
-                <video src="VIDEOS/UI_UX2.mp4" muted playsinline preload="metadata" loop></video>
-              </div>
-              <div class="video-overlay"></div>
-              <div class="video-center-play"><i class="fas fa-play"></i></div>
-              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
-              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
-              <div class="video-meta">
-                <span class="video-category green"><i class="fas fa-mobile-alt"></i> UI/UX</span>
-                <h3 class="video-title">App UI Design — Vol. 2</h3>
-                <p class="video-desc">Second-generation UI explorations — dark-mode flows, onboarding sequences, and component-level animation polish.</p>
-                <div class="video-footer">
-                  <div class="video-tags">
-                    <span class="video-tag">Flutter</span>
-                    <span class="video-tag">Firebase</span>
-                    <span class="video-tag">Dark Mode</span>
-                  </div>
-                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
-                </div>
-              </div>
-            </div>
 
           </div>
         </section>
