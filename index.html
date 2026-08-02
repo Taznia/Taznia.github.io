@@ -1,1549 +1,544 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Taznia Tabassum Onon — AI & Robotics Portfolio</title>
-  <meta name="description" content="Portfolio of Taznia Tabassum Onon — AI, Robotics, Machine Learning, and Software Engineering.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-
-    :root {
-      --accent-cyan: #00f0ff;
-      --accent-purple: #a855f7;
-      --accent-pink: #ec4899;
-      --glass-bg: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-bg-hover: rgba(255, 255, 255, 0.06);
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #030014;
-      color: #e2e8f0;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.4); border-radius: 99px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(168, 85, 247, 0.7); }
-
-    /* Galaxy Canvas */
-    #galaxy-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-    }
-
-    /* Mesh gradient overlays */
-    .mesh-gradient {
-      position: fixed;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.15;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .mesh-1 { background: var(--accent-cyan); top: -200px; right: -200px; animation: float-mesh 20s ease-in-out infinite; }
-    .mesh-2 { background: var(--accent-purple); bottom: -100px; left: -200px; animation: float-mesh 25s ease-in-out infinite reverse; }
-    .mesh-3 { background: var(--accent-pink); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: float-mesh 30s ease-in-out infinite; }
-
-    @keyframes float-mesh {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -50px) scale(1.1); }
-      66% { transform: translate(-20px, 30px) scale(0.95); }
-    }
-
-    /* Glass Card */
-    .glass-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .glass-card:hover {
-      background: var(--glass-bg-hover);
-      border-color: rgba(168, 85, 247, 0.3);
-      box-shadow: 0 0 40px rgba(168, 85, 247, 0.08), inset 0 0 40px rgba(168, 85, 247, 0.02);
-      transform: translateY(-4px);
-    }
-
-    /* Gradient Border Card */
-    .gradient-border-card {
-      position: relative;
-      border-radius: 20px;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(0, 240, 255, 0.2), rgba(236, 72, 153, 0.3));
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .gradient-border-card:hover {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.7), rgba(0, 240, 255, 0.5), rgba(236, 72, 153, 0.6));
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(168, 85, 247, 0.15);
-    }
-    .gradient-border-card .inner {
-      background: rgba(3, 0, 20, 0.95);
-      border-radius: 19px;
-      height: 100%;
-    }
-
-    .hero-name-wrap {
-      position: relative;
-      display: inline-block;
-    }
-
-    .project-marquee {
-      overflow: hidden;
-      padding-bottom: 0.5rem;
-    }
-    .project-track {
-      display: flex;
-      gap: 1rem;
-      width: max-content;
-      will-change: transform;
-      animation: marquee-scroll 34s linear infinite reverse;
-      padding-right: 1rem;
-      margin-bottom: 1rem;
-    }
-    .project-marquee:hover .project-track {
-      animation-play-state: paused;
-    }
-    .project-card {
-      width: min(88vw, 19rem);
-      flex: 0 0 auto;
-      border-radius: 24px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
-      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-    }
-    .project-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      border-color: rgba(103, 232, 249, 0.35);
-      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.34);
-    }
-    .project-card img {
-      width: 100%;
-      height: 12rem;
-      object-fit: cover;
-      filter: saturate(1.08) contrast(1.02);
-    }
-    .project-card .content {
-      padding: 1rem;
-    }
-    .project-card h3 {
-      margin: 0 0 0.4rem;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.05rem;
-      color: #fff;
-    }
-    .project-card p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.56);
-      font-size: 0.88rem;
-      line-height: 1.6;
-    }
-    .project-card .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 0.85rem;
-    }
-    .project-card .tag {
-      padding: 0.28rem 0.65rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #dbeafe;
-      background: rgba(59, 130, 246, 0.12);
-      border: 1px solid rgba(96, 165, 250, 0.18);
-    }
-    .project-card .tag.purple { background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.18); }
-    .project-card .tag.green { background: rgba(34, 197, 94, 0.12); border-color: rgba(34, 197, 94, 0.18); }
-    .project-card .tag.pink { background: rgba(236, 72, 153, 0.12); border-color: rgba(236, 72, 153, 0.18); }
-    @keyframes marquee-scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(calc(-50% - 0.5rem)); }
-    }
-
-    .achievement-marquee {
-      overflow: hidden;
-      margin-top: 1.5rem;
-    }
-    .achievement-track {
-      display: flex;
-      gap: 1rem;
-      width: max-content;
-      animation: marquee-scroll 42s linear infinite reverse;
-      will-change: transform;
-    }
-    .achievement-marquee:hover .achievement-track {
-      animation-play-state: paused;
-    }
-    .achievement-card {
-      width: min(88vw, 22rem);
-      flex: 0 0 auto;
-      overflow: hidden;
-      border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
-    }
-    .achievement-card img {
-      width: 100%;
-      height: 14rem;
-      object-fit: cover;
-      display: block;
-    }
-    .achievement-card .caption {
-      padding: 0.9rem 1rem 1rem;
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: 0.01em;
-    }
-
-    /* Navigation */
-    #sticky-nav {
-      position: sticky;
-      top: 0; z-index: 50;
-      background: rgba(3, 0, 20, 0.6);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .nav-link {
-      position: relative;
-      padding: 0.5rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.55);
-      transition: color 0.3s;
-    }
-    .nav-link:hover { color: var(--accent-cyan); }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 50%;
-      width: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-      border-radius: 999px;
-      transition: all 0.3s;
-      transform: translateX(-50%);
-    }
-    .nav-link:hover::after { width: 70%; }
-
-    /* Hero Typing Effect */
-    .hero-subtitle {
-      font-family: 'Space Grotesk', sans-serif;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient-flow 4s ease-in-out infinite;
-    }
-    @keyframes gradient-flow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .hero-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 0.9;
-    }
-
-    /* Section Headers */
-    .section-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      opacity: 0.6;
-    }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .section-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.5), transparent);
-    }
-
-    /* Skill Pill */
-    .skill-pill {
-      padding: 0.35rem 0.9rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      background: rgba(168, 85, 247, 0.1);
-      color: #c4b5fd;
-      transition: all 0.3s;
-    }
-    .skill-pill:hover {
-      background: rgba(168, 85, 247, 0.25);
-      border-color: rgba(168, 85, 247, 0.6);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
-    }
-    .skill-pill.cyan { border-color: rgba(0, 240, 255, 0.3); background: rgba(0, 240, 255, 0.08); color: #67e8f9; }
-    .skill-pill.cyan:hover { background: rgba(0, 240, 255, 0.2); border-color: rgba(0, 240, 255, 0.5); }
-    .skill-pill.pink { border-color: rgba(236, 72, 153, 0.3); background: rgba(236, 72, 153, 0.08); color: #f9a8d4; }
-    .skill-pill.pink:hover { background: rgba(236, 72, 153, 0.2); border-color: rgba(236, 72, 153, 0.5); }
-    .skill-pill.green { border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.08); color: #86efac; }
-    .skill-pill.green:hover { background: rgba(34, 197, 94, 0.2); border-color: rgba(34, 197, 94, 0.5); }
-
-    /* Tech Grid Skill */
-    .tech-skill-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .tech-skill-card:hover {
-      background: rgba(168, 85, 247, 0.08);
-      border-color: rgba(168, 85, 247, 0.3);
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1);
-    }
-    .tech-skill-card .icon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-    .tech-skill-card .label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: 0.03em;
-    }
-
-    /* Timeline */
-    .timeline-item {
-      position: relative;
-      padding-left: 2.5rem;
-    }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0;
-      width: 1px; height: 100%;
-      background: linear-gradient(180deg, var(--accent-purple), rgba(168, 85, 247, 0.1));
-    }
-    .timeline-item::after {
-      content: '';
-      position: absolute;
-      left: -5px; top: 8px;
-      width: 11px; height: 11px;
-      border-radius: 50%;
-      background: var(--accent-purple);
-      box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
-    }
-
-    /* Planet positioning */
-    .planet-container {
-      position: relative;
-      width: fit-content;
-    }
-    #planet-svg {
-      width: 220px; height: 220px;
-      filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.3));
-      transition: transform 0.3s;
-    }
-    #planet-svg:hover { transform: scale(1.05); }
-    @media (min-width: 640px) {
-      #planet-svg { width: 280px; height: 280px; }
-    }
-
-    /* Floating Badge */
-    .floating-badge {
-      display: inline-flex;
-      align-items: center; gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      background: rgba(0, 240, 255, 0.05);
-      color: #67e8f9;
-      animation: pulse-glow 3s ease-in-out infinite;
-    }
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 8px rgba(0, 240, 255, 0.1); }
-      50% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
-    }
-
-    /* Staggered fade-in */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Chat Styles */
-    #chat-window {
-      position: fixed;
-      right: 1.5rem; bottom: 6rem;
-      width: 100%; max-width: 380px; height: 480px;
-      z-index: 60;
-      background: rgba(3, 0, 20, 0.95);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 20px;
-      backdrop-filter: blur(24px);
-      box-shadow: 0 0 60px rgba(168, 85, 247, 0.15);
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s;
-      transform: translateY(20px) scale(0.95);
-      opacity: 0; visibility: hidden;
-      display: flex; flex-direction: column;
-    }
-    #chat-window.open { transform: translateY(0) scale(1); opacity: 1; visibility: visible; }
-
-    #chat-messages {
-      flex-grow: 1; overflow-y: auto;
-      padding: 1rem;
-      max-height: calc(480px - 120px);
-    }
-    .message {
-      max-width: 85%; padding: 0.6rem 0.9rem;
-      border-radius: 16px;
-      margin-bottom: 0.5rem;
-      font-size: 0.85rem; line-height: 1.5;
-    }
-    .buddy-message {
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      margin-right: auto;
-      border-bottom-left-radius: 4px;
-    }
-    .user-message {
-      background: rgba(0, 240, 255, 0.1);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      margin-left: auto;
-      border-bottom-right-radius: 4px;
-    }
-
-    .chat-toggle-btn {
-      position: fixed;
-      bottom: 1.5rem; right: 1.5rem;
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      z-index: 55;
-      background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
-      color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
-      transition: all 0.3s;
-      border: none; cursor: pointer;
-    }
-    .chat-toggle-btn:hover { transform: scale(1.1); box-shadow: 0 0 50px rgba(168, 85, 247, 0.6); }
-
-    @media (max-width: 640px) {
-      #chat-window { right: 0.5rem; bottom: 5rem; max-width: calc(100% - 1rem); height: 400px; }
-    }
-
-    /* Stat counter */
-    .stat-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 2.5rem;
-      background: linear-gradient(135deg, #fff, var(--accent-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Footer gradient */
-    .footer-gradient {
-      background: linear-gradient(180deg, transparent, rgba(168, 85, 247, 0.03), rgba(168, 85, 247, 0.06));
-    }
-
-    /* ===================== PROJECT VIDEO CARDS (sidebar layout) ===================== */
-
-    .proj-video-card {
-      display: flex;
-      flex-direction: row;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.02);
-      transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
-    }
-    .proj-video-card:hover {
-      border-color: rgba(168,85,247,0.4);
-      box-shadow: 0 0 50px rgba(168,85,247,0.1), 0 24px 60px rgba(0,0,0,0.4);
-      transform: translateY(-4px);
-    }
-    .proj-video-card.is-playing {
-      border-color: rgba(0,240,255,0.5);
-      box-shadow: 0 0 0 1px rgba(0,240,255,0.15), 0 0 60px rgba(0,240,255,0.1), 0 24px 60px rgba(0,0,0,0.4);
-    }
-
-    /* ── VIDEO SIDE (left 55%) ── */
-    .proj-video-side {
-      position: relative;
-      width: 55%;
-      flex-shrink: 0;
-      overflow: hidden;
-      background: #000;
-      cursor: pointer;
-    }
-    /* VIDEO is a normal block — it drives the height of the whole row */
-    .proj-video {
-      display: block;
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      transition: filter 0.4s, transform 0.5s;
-    }
-    .proj-video-card:not(.is-playing) .proj-video {
-      filter: brightness(0.45) saturate(1.1);
-    }
-    .proj-video-card.is-playing .proj-video {
-      filter: brightness(1) saturate(1.1);
-    }
-    .proj-video-card:hover .proj-video {
-      transform: scale(1.03);
-    }
-
-    /* overlays sit on top of the normal-flow video */
-    .proj-video-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(3,0,20,0.1) 0%, rgba(3,0,20,0.55) 100%);
-      pointer-events: none;
-      z-index: 1;
-      transition: opacity 0.4s;
-    }
-    .proj-video-card.is-playing .proj-video-overlay { opacity: 0.15; }
-
-    /* Big centre play icon */
-    .proj-center-play {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 3;
-      width: 68px; height: 68px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.22);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff;
-      font-size: 1.5rem;
-      pointer-events: none;
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .proj-video-card.is-playing .proj-center-play {
-      opacity: 0;
-      transform: translate(-50%,-50%) scale(0.75);
-    }
-
-    /* Mute button */
-    .proj-mute-btn {
-      position: absolute;
-      top: 0.75rem; right: 0.75rem;
-      z-index: 4;
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.7);
-      font-size: 0.75rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: all 0.25s;
-      opacity: 0;
-    }
-    .proj-video-side:hover .proj-mute-btn,
-    .proj-video-card.is-playing .proj-mute-btn {
-      opacity: 1;
-    }
-    .proj-mute-btn:hover {
-      background: rgba(168,85,247,0.35);
-      border-color: rgba(168,85,247,0.5);
-      color: #fff;
-    }
-
-    /* Progress bar at bottom of video side */
-    .proj-progress-wrap {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: rgba(255,255,255,0.08);
-      z-index: 4;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .proj-video-card.is-playing .proj-progress-wrap {
-      opacity: 1;
-    }
-    .proj-progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
-      border-radius: 0 2px 2px 0;
-    }
-
-    /* ── INFO SIDE (right sidebar) ── */
-    .proj-info-side {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.85rem;
-      padding: 2rem 1.75rem;
-      background: rgba(3,0,20,0.6);
-      backdrop-filter: blur(20px);
-      border-left: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .proj-category {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-      padding: 0.22rem 0.7rem;
-      border-radius: 999px;
-      width: fit-content;
-    }
-    .proj-category.purple { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); color: #d8b4fe; }
-    .proj-category.cyan   { background: rgba(0,240,255,0.1);   border: 1px solid rgba(0,240,255,0.25);  color: #67e8f9; }
-    .proj-category.pink   { background: rgba(236,72,153,0.12); border: 1px solid rgba(236,72,153,0.28); color: #f9a8d4; }
-    .proj-category.green  { background: rgba(34,197,94,0.1);   border: 1px solid rgba(34,197,94,0.22);  color: #86efac; }
-
-    .proj-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #fff;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-    }
-
-    .proj-desc {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.65;
-    }
-
-    .proj-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .ptag {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-    }
-    .ptag.purple { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.2); color: #c4b5fd; }
-    .ptag.cyan   { background: rgba(0,240,255,0.08);  border: 1px solid rgba(0,240,255,0.18);  color: #67e8f9; }
-    .ptag.pink   { background: rgba(236,72,153,0.1);  border: 1px solid rgba(236,72,153,0.2);  color: #f9a8d4; }
-    .ptag.green  { background: rgba(34,197,94,0.08);  border: 1px solid rgba(34,197,94,0.18);  color: #86efac; }
-
-    /* Play / Pause button inside sidebar */
-    .proj-play-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.2rem;
-      width: fit-content;
-      padding: 0.6rem 1.3rem;
-      border-radius: 999px;
-      background: rgba(168,85,247,0.15);
-      border: 1px solid rgba(168,85,247,0.38);
-      color: #d8b4fe;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .proj-play-btn:hover {
-      background: rgba(168,85,247,0.3);
-      border-color: rgba(168,85,247,0.65);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(168,85,247,0.2);
-    }
-    .proj-video-card.is-playing .proj-play-btn {
-      background: rgba(0,240,255,0.1);
-      border-color: rgba(0,240,255,0.38);
-      color: #67e8f9;
-    }
-
-    /* Responsive: stack vertically on mobile */
-    @media (max-width: 700px) {
-      .proj-video-card { flex-direction: column; }
-      .proj-video-side { width: 100%; }
-      .proj-video      { height: 220px; }
-      .proj-info-side  { border-left: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.4rem; }
-    }
-    /* =================== END PROJECT VIDEO CARDS =================== */
-  </style>
+  <title>Taznia Tabassum Onon — AI & Robotics</title>
+  <meta name="description" content="Portfolio of Taznia Tabassum Onon — CSE student at BRAC University. AI, robotics, machine learning, and product design. IEEE R10 Gold. CGPA 3.76.">
+  <meta name="theme-color" content="#F7F9FC">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    (() => {
+      const root = document.documentElement;
+      root.classList.add("js");
+      const theme = localStorage.getItem("theme") || "light";
+      root.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
-
 <body>
-  <!-- Galaxy Canvas -->
-  <canvas id="galaxy-canvas"></canvas>
+  <div class="page-loader" id="page-loader" role="status" aria-live="polite" aria-label="Loading portfolio">
+    <div class="loader-inner">
+      <p class="loader-brand">Taznia<span>.</span></p>
+      <div class="loader-bar" aria-hidden="true"><span></span></div>
+      <p class="loader-status">Booting systems</p>
+    </div>
+  </div>
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-  <!-- Mesh gradient blobs -->
-  <div class="mesh-gradient mesh-1"></div>
-  <div class="mesh-gradient mesh-2"></div>
-  <div class="mesh-gradient mesh-3"></div>
-
-  <div class="relative z-10">
-
-    <!-- Navigation -->
-    <nav id="sticky-nav">
-      <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#home" class="text-lg font-bold tracking-tight" style="font-family: 'Space Grotesk', sans-serif;">
-          <span style="color: var(--accent-cyan);">T.</span><span class="text-white/60">ONON</span>
-        </a>
-        <ul class="hidden sm:flex items-center gap-1">
-          <li><a href="#home" class="nav-link">Home</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#experience" class="nav-link">Experience</a></li>
-          <li><a href="#skills" class="nav-link">Skills</a></li>
-          <li><a href="#education" class="nav-link">Education</a></li>
-          <li><a href="#achievements" class="nav-link">Awards</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-        <!-- Mobile menu toggle -->
-        <button id="mobile-menu-btn" class="sm:hidden text-white/60 hover:text-white text-xl" aria-label="Open navigation menu">
-          <i class="fas fa-bars"></i>
+  <header class="site-header" id="site-header">
+    <div class="shell header-inner">
+      <a class="logo" href="#home">Taznia<span>.</span></a>
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Stack</a>
+        <a href="#awards">Awards</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 0 0 11.5 11.5z"/></svg>
+        </button>
+        <a class="btn btn-primary header-cv" href="Taznia%20Tabassum%20Onon%20CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+          <span></span><span></span><span></span>
         </button>
       </div>
-      <!-- Mobile menu -->
-      <div id="mobile-menu" class="hidden sm:hidden px-6 pb-4">
-        <div class="flex flex-wrap gap-2">
-          <a href="#home" class="nav-link">Home</a>
-          <a href="#about" class="nav-link">About</a>
-          <a href="#projects" class="nav-link">Projects</a>
-          <a href="#experience" class="nav-link">Experience</a>
-          <a href="#skills" class="nav-link">Skills</a>
-          <a href="#education" class="nav-link">Education</a>
-          <a href="#achievements" class="nav-link">Awards</a>
-          <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <nav class="nav-mobile" id="mobile-nav" aria-label="Mobile" hidden>
+      <a href="#about">About</a>
+      <a href="#projects">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Stack</a>
+      <a href="#education">Education</a>
+      <a href="#awards">Awards</a>
+      <a href="#contact">Contact</a>
+      <a class="mobile-cta" href="Taznia%20Tabassum%20Onon%20CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-dots" aria-hidden="true"></div>
+      <div class="scan-line" aria-hidden="true"></div>
+
+      <div class="shell hero-layout">
+        <div class="hero-copy">
+          <p class="mono-label reveal">// AI · ROBOTICS · CSE</p>
+          <p class="hero-intro reveal">I am</p>
+          <h1 class="hero-title reveal">
+            <span class="word"><span>Taznia</span></span>
+            <span class="word"><span>Tabassum</span></span>
+            <span class="word accent"><span>Onon</span></span>
+          </h1>
+          <p class="hero-tagline reveal">Systems built to sense, learn, and ship.</p>
+          <p class="hero-lead reveal">
+            CSE student at BRAC University building across robotics, reinforcement learning,
+            computer vision, and product design — with award-winning hardware work to back it up.
+          </p>
+          <div class="hero-actions reveal">
+            <a class="btn btn-primary" href="#projects">
+              Explore the work
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#contact">Get in touch</a>
+          </div>
+          <div class="status-row reveal">
+            <span class="status-pill"><span class="pulse"></span> Open to roles</span>
+            <span class="status-pill muted">BRAC CSE · CGPA 3.76</span>
+            <span class="status-pill muted">IEEE R10 Gold</span>
+          </div>
+        </div>
+
+        <aside class="hero-media reveal" aria-label="Featured project demo">
+          <div class="hero-video-frame">
+            <video
+              id="hero-video"
+              class="hero-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+              aria-label="Autoplaying demo of Adventure of Sui"
+            >
+              <source src="VIDEOS/ADVENTURE%20OF%20SUI.webm" type="video/webm">
+              <source src="VIDEOS/ADVENTURE%20OF%20SUI.mp4" type="video/mp4">
+            </video>
+            <div class="hero-video-shade" aria-hidden="true"></div>
+            <div class="hero-video-meta">
+              <span class="hud-badge">LIVE DEMO</span>
+              <p>Adventure of Sui · Godot</p>
+            </div>
+          </div>
+          <ul class="hud-tags hero-signal-tags">
+            <li>ROS // OK</li>
+            <li>VISION // OK</li>
+            <li>RL // OK</li>
+            <li>CGPA 3.76</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-mask">
+        <div class="marquee-track">
+          <span>ROS</span><span>Computer Vision</span><span>Reinforcement Learning</span><span>Python &amp; C++</span><span>MuJoCo</span><span>OpenCV</span><span>Godot</span><span>Flutter</span><span>Embedded Systems</span><span>UI/UX</span><span>Edge AI</span><span>Product Design</span>
+          <span>ROS</span><span>Computer Vision</span><span>Reinforcement Learning</span><span>Python &amp; C++</span><span>MuJoCo</span><span>OpenCV</span><span>Godot</span><span>Flutter</span><span>Embedded Systems</span><span>UI/UX</span><span>Edge AI</span><span>Product Design</span>
         </div>
       </div>
-    </nav>
+    </div>
 
-    <div class="max-w-6xl mx-auto px-6">
+    <section class="mission">
+      <div class="shell mission-layout">
+        <p class="mission-text reveal">
+          I make <em>real robotics and AI</em> tangible —
+          research-grade systems that used to stay in notebooks, now ready to demo, deploy, and discuss.
+        </p>
+        <div class="chip-row reveal">
+          <span class="mono-chip">IEEE GOLD</span>
+          <span class="mono-chip">THESIS A+</span>
+          <span class="mono-chip">FOUNDER</span>
+        </div>
+      </div>
+    </section>
 
-      <!-- ==================== HERO ==================== -->
-      <header id="home" class="min-h-[85vh] flex items-center py-20">
-        <div class="w-full flex flex-col lg:flex-row items-center lg:items-start gap-12">
-          <!-- Text -->
-          <div class="flex-1 space-y-6">
-            <div class="floating-badge">
-              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-              Open to Opportunities
-            </div>
-            <div class="hero-name-wrap">
-              <p class="text-sm font-medium text-white/40 uppercase tracking-widest mb-3">Hi, I'm</p>
-              <h1 class="hero-name text-white text-5xl sm:text-7xl lg:text-8xl">Taznia</h1>
-              <h1 class="hero-name text-white text-5xl sm:text-7xl lg:text-8xl mt-1">Tabassum</h1>
-              <h1 class="hero-name hero-subtitle text-5xl sm:text-7xl lg:text-8xl mt-1">Onon</h1>
-            </div>
-            <p class="text-lg text-white/50 max-w-xl leading-relaxed">
-              A dedicated student translating academic excellence in CSE into high-impact, hands-on projects across
-              <span class="text-white/80 font-medium">Robotics</span>,
-              <span class="text-white/80 font-medium">AI</span>, and
-              <span class="text-white/80 font-medium">App Development</span>.
+    <section class="section" id="about">
+      <div class="shell">
+        <header class="section-head reveal">
+          <p class="mono-label">// 01 — ABOUT</p>
+          <h2 class="section-title">Built for teams that want depth and delivery.</h2>
+        </header>
+        <div class="about-layout">
+          <div class="about-copy reveal">
+            <p>
+              I’m a Computer Science &amp; Engineering student at BRAC University translating coursework into
+              high-impact projects across robotics, reinforcement learning, game development, and mobile product design.
             </p>
-            <div class="flex flex-wrap gap-3 pt-2">
-              <a href="#projects"
-                class="px-6 py-3 rounded-full text-sm font-semibold bg-gradient-to-r from-purple-600 to-cyan-500 text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:-translate-y-0.5">
-                View Projects <i class="fas fa-arrow-right ml-2 text-xs"></i>
-              </a>
-              <a href="#contact"
-                class="px-6 py-3 rounded-full text-sm font-semibold border border-white/10 text-white/70 hover:border-white/30 hover:text-white transition-all duration-300">
-                Get in Touch
-              </a>
-            </div>
+            <p>
+              I care about clean execution — research that ships, interfaces that communicate depth quickly,
+              and systems that feel intentional from the first interaction.
+            </p>
           </div>
-          <!-- Planet Buddy -->
-          <div class="planet-container flex-shrink-0">
-            <svg id="planet-svg" viewBox="0 0 200 240" class="drop-shadow-lg transition-transform hover:scale-[1.05]">
-              <defs>
-                <radialGradient id="planet-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                  <stop offset="0%" id="grad-stop-1" style="stop-color:#e0aaff;stop-opacity:1">
-                    <animate attributeName="stop-color" values="#e0aaff;#67e8f9;#e0aaff" dur="5s" repeatCount="indefinite" />
-                  </stop>
-                  <stop offset="50%" id="grad-stop-2" style="stop-color:#058760;stop-opacity:1">
-                    <animate attributeName="stop-color" values="#058760;#a855f7;#058760" dur="5s" repeatCount="indefinite" />
-                  </stop>
-                  <stop offset="100%" id="grad-stop-3" style="stop-color:#4a0082;stop-opacity:1">
-                    <animate attributeName="stop-color" values="#4a0082;#ec4899;#4a0082" dur="5s" repeatCount="indefinite" />
-                  </stop>
-                </radialGradient>
-              </defs>
-              <circle cx="100" cy="100" r="90" fill="url(#planet-gradient)" />
-              <ellipse cx="50" cy="50" rx="15" ry="10" fill="white" opacity="0.6">
-                <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite" />
-              </ellipse>
-              <g id="eyes-container">
-                <circle cx="75" cy="85" r="20" fill="white" stroke="#333" stroke-width="2" />
-                <circle cx="75" cy="85" r="15" fill="#00f0ff" />
-                <circle id="eye-left-pupil" cx="75" cy="85" r="7" fill="black" class="eye-pupil" data-center-x="75" data-center-y="85" data-eye-limit="10" />
-                <circle cx="68" cy="78" r="3" fill="white" opacity="0.9" />
-                <circle cx="125" cy="85" r="20" fill="white" stroke="#333" stroke-width="2" />
-                <circle cx="125" cy="85" r="15" fill="#00f0ff" />
-                <circle id="eye-right-pupil" cx="125" cy="85" r="7" fill="black" class="eye-pupil" data-center-x="125" data-center-y="85" data-eye-limit="10" />
-                <circle cx="118" cy="78" r="3" fill="white" opacity="0.9" />
-              </g>
-              <path id="mouth-path" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" />
-            </svg>
+          <div class="about-aside reveal">
+            <p class="mono-label">FOCUS</p>
+            <ul class="focus-list">
+              <li>Robotics &amp; embedded ML</li>
+              <li>Reinforcement learning</li>
+              <li>Computer vision</li>
+              <li>Game &amp; product design</li>
+            </ul>
           </div>
         </div>
-      </header>
+      </div>
+    </section>
 
-      <main class="space-y-32">
-
-        <!-- ==================== ABOUT ==================== -->
-        <section id="about" class="fade-up">
-          <div class="flex items-center gap-4 mb-12">
-            <span class="section-number text-sm">00</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">About Me</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
-
-          <div class="about-grid">
-            <div class="glass-card p-8 about-copy">
-              <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/70 mb-4">CSE student at BRAC University</p>
-              <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif;">Designing polished digital experiences with robotics, AI, and product thinking.</h3>
-              <p class="text-white/55 leading-relaxed mb-5">
-                I build across robotics, game development, machine learning, and mobile UI/UX. My focus is on turning complex ideas into systems that feel intuitive, visually premium, and technically grounded.
-              </p>
-              <div class="about-badges">
-                <span class="skill-pill cyan">Robotics</span>
-                <span class="skill-pill">AI / ML</span>
-                <span class="skill-pill pink">App Design</span>
-                <span class="skill-pill green">Game Dev</span>
-              </div>
+    <section class="stats-band">
+      <div class="shell">
+        <div class="stats-panel reveal">
+          <div class="stats-dots" aria-hidden="true"></div>
+          <div class="stats-grid">
+            <div>
+              <strong><span data-count="3.76" data-decimals="2">0</span></strong>
+              <span class="mono-label">CGPA</span>
             </div>
-
-            <div class="space-y-4">
-              <div class="gradient-border-card">
-                <div class="inner p-6">
-                  <div class="about-stat-grid">
-                    <div class="about-stat">
-                      <strong>3.76</strong>
-                      <span>Current CGPA at BRAC University</span>
-                    </div>
-                    <div class="about-stat">
-                      <strong>124</strong>
-                      <span>Credits completed with scholarship support</span>
-                    </div>
-                    <div class="about-stat">
-                      <strong>5+</strong>
-                      <span>Core domains spanning AI, UX, and robotics</span>
-                    </div>
-                    <div class="about-stat">
-                      <strong>A+</strong>
-                      <span>Thesis result for ADECS research project</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="glass-card p-6">
-                <p class="text-sm text-white/60 leading-relaxed">
-                  I care about clean execution, strong storytelling, and interfaces that help recruiters understand the depth of the work immediately.
-                </p>
-              </div>
+            <div>
+              <strong><span data-count="124" data-decimals="0">0</span></strong>
+              <span class="mono-label">Credits</span>
+            </div>
+            <div>
+              <strong><span data-count="8" data-decimals="0">0</span>+</strong>
+              <span class="mono-label">Awards</span>
+            </div>
+            <div>
+              <strong>100%</strong>
+              <span class="mono-label">Hands-on builds</span>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
 
-        <!-- ==================== PROJECTS ==================== -->
-        <section id="projects" class="fade-up">
-          <div class="flex items-center gap-4 mb-12">
-            <span class="section-number text-sm">01</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">Core Projects</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
+    <section class="section" id="projects">
+      <div class="shell">
+        <header class="section-head reveal">
+          <p class="mono-label">// 02 — SELECTED WORK</p>
+          <h2 class="section-title">Proof you can play, pause, and inspect.</h2>
+        </header>
 
-          <div class="video-gallery space-y-6">
-
-            <!-- ── Game Dev: Adventure of Sui ── VIDEO CARD ── -->
-            <article class="proj-video-card fade-up">
+        <div class="project-stack">
+          <article class="project-feature reveal">
+            <div class="project-media proj-video-card">
               <div class="proj-video-side">
-                <video class="proj-video" muted playsinline preload="none" loop>
+                <video class="proj-video" muted playsinline loop autoplay preload="metadata">
                   <source data-src="VIDEOS/ADVENTURE OF SUI.webm" type="video/webm">
                   <source data-src="VIDEOS/ADVENTURE OF SUI.mp4" type="video/mp4">
-                  <track kind="subtitles" label="English subtitles" srclang="en" src="VIDEOS/adventure-of-sui-captions.vtt" default>
-                  <track kind="descriptions" label="English descriptions" srclang="en" src="VIDEOS/adventure-of-sui-descriptions.vtt">
                 </video>
                 <div class="proj-video-overlay"></div>
-                <button type="button" class="proj-center-play" aria-label="Play video demo"><i class="fas fa-play"></i></button>
-                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <button type="button" class="proj-center-play" aria-label="Play Adventure of Sui demo">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"></button>
                 <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
-              <div class="proj-info-side">
-                <div class="proj-category purple"><i class="fas fa-gamepad"></i> Game Dev</div>
-                <h3 class="proj-title">Adventure of Sui</h3>
-                <p class="proj-desc">A hand-crafted 2D adventure game built in Godot — featuring custom physics, sprite animations, and an original level design pipeline. Deployed at Onnesok.</p>
-                <div class="proj-tags">
-                  <span class="ptag purple">Godot</span>
-                  <span class="ptag purple">GDScript</span>
-                  <span class="ptag purple">2D Physics</span>
-                  <span class="ptag purple">Level Design</span>
-                </div>
-                <button type="button" class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
-              </div>
-            </article>
+            </div>
+            <div class="project-copy">
+              <p class="mono-label">GAME · GODOT</p>
+              <h3>Adventure of Sui</h3>
+              <p>A hand-crafted 2D adventure in Godot with custom physics, sprite animation, and an original level-design pipeline. Deployed at Onnesok.</p>
+              <ul class="tag-list">
+                <li>Godot</li><li>GDScript</li><li>2D Physics</li><li>Level Design</li>
+              </ul>
+              <button type="button" class="btn btn-ghost proj-play-btn"><span class="btn-label">Play demo</span></button>
+            </div>
+          </article>
 
-            <!-- ── Game Dev: ShooterX ── VIDEO CARD ── -->
-            <article class="proj-video-card fade-up">
+          <article class="project-feature reveal">
+            <div class="project-media proj-video-card">
               <div class="proj-video-side">
-                <video class="proj-video" muted playsinline preload="none" loop>
+                <video class="proj-video" muted playsinline loop autoplay preload="metadata">
                   <source data-src="VIDEOS/shooterx.webm" type="video/webm">
                   <source data-src="VIDEOS/shooterx.mp4" type="video/mp4">
-                  <track kind="subtitles" label="English subtitles" srclang="en" src="VIDEOS/shooterx-captions.vtt" default>
-                  <track kind="descriptions" label="English descriptions" srclang="en" src="VIDEOS/shooterx-descriptions.vtt">
                 </video>
                 <div class="proj-video-overlay"></div>
-                <button type="button" class="proj-center-play" aria-label="Play video demo"><i class="fas fa-play"></i></button>
-                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <button type="button" class="proj-center-play" aria-label="Play ShooterX demo">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"></button>
                 <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
-              <div class="proj-info-side">
-                <div class="proj-category pink"><i class="fas fa-crosshairs"></i> Game Dev</div>
-                <h3 class="proj-title">ShooterX</h3>
-                <p class="proj-desc">Fast-paced top-down shooter with procedural enemy AI, dynamic difficulty scaling, and a custom weapon system built entirely in Godot Engine.</p>
-                <div class="proj-tags">
-                  <span class="ptag pink">Godot</span>
-                  <span class="ptag pink">Enemy AI</span>
-                  <span class="ptag pink">Procedural</span>
-                  <span class="ptag pink">Game Design</span>
-                </div>
-                <button type="button" class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
-              </div>
-            </article>
+            </div>
+            <div class="project-copy">
+              <p class="mono-label">GAME · AI</p>
+              <h3>ShooterX</h3>
+              <p>A fast top-down shooter with procedural enemy AI, dynamic difficulty, and a custom weapon system built entirely in Godot.</p>
+              <ul class="tag-list">
+                <li>Godot</li><li>Enemy AI</li><li>Procedural</li><li>Game Design</li>
+              </ul>
+              <button type="button" class="btn btn-ghost proj-play-btn"><span class="btn-label">Play demo</span></button>
+            </div>
+          </article>
 
-            <!-- ── Bionic Arm ── TEXT CARD ── -->
-            <article class="glass-card p-6 fade-up">
-              <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600/20 to-cyan-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🦾</div>
-                <div class="flex-1">
-                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">AI-Powered Bionic Arm with Sensory Feedback</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · ML · Embedded Systems</span>
-                  </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Designed and implemented an AI-powered bionic prosthetic arm featuring real-time sensory feedback. Integrated machine learning algorithms with embedded control systems for adaptive grasp patterns. Won Gold Award at IEEE R10 HTC.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- ── Quadruped Robot ── TEXT CARD ── -->
-            <article class="glass-card p-6 fade-up">
-              <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-600/20 to-purple-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🐕</div>
-                <div class="flex-1">
-                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">Quadruped Robot — AI Robotic Dog</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · RL · MuJoCo</span>
-                  </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Developed a four-legged robotic dog simulation using MuJoCo physics engine. Trained reinforcement learning policies for walking, balancing, and obstacle avoidance on complex terrain.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- ── RL Simulations ── TEXT CARD ── -->
-            <article class="glass-card p-6 fade-up">
-              <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-600/20 to-green-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">🧠</div>
-                <div class="flex-1">
-                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">Reinforcement Learning Simulations</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · Q-Learning · OpenAI Gym</span>
-                  </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Built and trained RL agents across custom and benchmark environments using OpenAI Gym, including Q-Learning and deep RL approaches for autonomous decision-making.</p>
-                </div>
-              </div>
-            </article>
-
-            <!-- ── Face Detection ── TEXT CARD ── -->
-            <article class="glass-card p-6 fade-up">
-              <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-600/20 to-cyan-500/10 border border-white/5 flex items-center justify-center text-2xl flex-shrink-0">👁️</div>
-                <div class="flex-1">
-                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                    <h3 class="text-xl font-bold text-white" style="font-family:'Space Grotesk',sans-serif;">Real-Time Face Detection System</h3>
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">Python · OpenCV</span>
-                  </div>
-                  <p class="text-white/50 text-sm leading-relaxed">Real-time face detection and tracking using OpenCV with optimized pipelines for low-latency processing and accurate multi-face tracking across video streams.</p>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </section>
-
-        <!-- ==================== EXPERIENCE ==================== -->
-        <section id="experience" class="fade-up">
-          <div class="flex items-center gap-4 mb-12">
-            <span class="section-number text-sm">02</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">Work Experience</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
-
-          <div class="space-y-8">
-            <!-- Onnesok -->
-            <div class="timeline-item fade-up">
-              <div class="glass-card p-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                  <h3 class="text-xl font-bold text-white">Co-Founder & COO</h3>
-                  <span class="text-xs font-medium px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400">Jan 2025 — Present</span>
-                </div>
-                <p class="text-sm text-purple-300 font-semibold mb-3">
-                  <a href="https://www.onnesok.com" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-300 transition-colors">Onnesok — Technology Platform</a>
-                </p>
-                <ul class="space-y-2 text-sm text-white/45">
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Co-founded and scaled an innovation-driven tech startup focused on digital products and game development.</li>
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Leading strategic planning, operational execution, and product workflows.</li>
-                </ul>
+          <article class="project-feature reveal">
+            <div class="project-media proj-video-card portrait" data-orientation="portrait">
+              <div class="proj-video-side">
+                <video class="proj-video" muted playsinline loop autoplay preload="metadata">
+                  <source data-src="VIDEOS/UIUX1.webm" type="video/webm">
+                  <source data-src="VIDEOS/UIUX1.mp4" type="video/mp4">
+                </video>
+                <div class="proj-video-overlay"></div>
+                <button type="button" class="proj-center-play" aria-label="Play UI/UX demo">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"></button>
+                <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
             </div>
-
-            <!-- BuReD -->
-            <div class="timeline-item fade-up">
-              <div class="glass-card p-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                  <h3 class="text-xl font-bold text-white">Coordinator</h3>
-                  <span class="text-xs font-medium px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300">Jan 2025 — Feb 2026</span>
-                </div>
-                <p class="text-sm text-purple-300 font-semibold mb-3">BRAC University Research & Development Club (BuReD)</p>
-                <ul class="space-y-2 text-sm text-white/45">
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Coordinated club activities, workshops, and seminars promoting student research.</li>
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Facilitated student research initiatives collaborating with teams and faculty mentors.</li>
-                </ul>
-              </div>
+            <div class="project-copy">
+              <p class="mono-label">PRODUCT · UI/UX</p>
+              <h3>Mobile UI / UX explorations</h3>
+              <p>Interface studies and product flows focused on clarity, hierarchy, and motion — bridging engineering depth with usable design.</p>
+              <ul class="tag-list">
+                <li>UI/UX</li><li>Flutter</li><li>Product</li><li>Motion</li>
+              </ul>
+              <button type="button" class="btn btn-ghost proj-play-btn"><span class="btn-label">Play demo</span></button>
             </div>
-
-            <!-- Intellectium -->
-            <div class="timeline-item fade-up">
-              <div class="glass-card p-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                  <h3 class="text-xl font-bold text-white">Graphic Designer</h3>
-                  <span class="text-xs font-medium px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">Jan 2024 — Dec 2025</span>
-                </div>
-                <p class="text-sm text-purple-300 font-semibold mb-3">Intellectium · Contract</p>
-                <ul class="space-y-2 text-sm text-white/45">
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Designed creative visual content for digital platforms, branding, and marketing campaigns.</li>
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Collaborated with global teams to deliver high-quality, engaging design solutions.</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Ecollab -->
-            <div class="timeline-item fade-up">
-              <div class="glass-card p-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                  <h3 class="text-xl font-bold text-white">Facilitator</h3>
-                  <span class="text-xs font-medium px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-300">Sep 2024 — Jun 2025</span>
-                </div>
-                <p class="text-sm text-purple-300 font-semibold mb-3">Ecollab International</p>
-                <ul class="space-y-2 text-sm text-white/45">
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Conducted workshops on leadership, communication, and collaboration.</li>
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Mentored participants and supported program activities for effective learning.</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Project Proyash -->
-            <div class="timeline-item fade-up">
-              <div class="glass-card p-8">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                  <h3 class="text-xl font-bold text-white">Team Lead — Social Media & Content</h3>
-                  <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/50">May 2024 — Jun 2025</span>
-                </div>
-                <p class="text-sm text-purple-300 font-semibold mb-3">Project Proyash (স্বচ্ছতার প্রয়াস)</p>
-                <ul class="space-y-2 text-sm text-white/45">
-                  <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Led the social media and content team, developing strategies to enhance online presence.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILLS ==================== -->
-        <section id="skills" class="fade-up">
-          <div class="flex items-center gap-4 mb-12">
-            <span class="section-number text-sm">03</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">Technical Stack</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-            <div class="tech-skill-card fade-up"><span class="icon">⚙️</span><span class="label">Robotics & ROS</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">🧠</span><span class="label">Machine Learning</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">🐍</span><span class="label">Python / C++</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">📱</span><span class="label">Flutter / Dart</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">👁️</span><span class="label">OpenCV / Vision</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">🎮</span><span class="label">Godot Engine</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">🏋️</span><span class="label">Gym / MuJoCo</span></div>
-            <div class="tech-skill-card fade-up"><span class="icon">🎨</span><span class="label">UI/UX Design</span></div>
-          </div>
-
-          <div class="glass-card p-8 fade-up">
-            <h4 class="text-sm uppercase tracking-widest text-white/40 font-semibold mb-5">Other Tools & Expertise</h4>
-            <div class="grid sm:grid-cols-2 gap-3 text-sm text-white/50">
-              <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Real-Time Face Detection (OpenCV)</div>
-              <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span> Embedded Systems & Arduino</div>
-              <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span> Firebase, PostgreSQL, MySQL</div>
-              <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> Git, GitHub, Docker</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== EDUCATION ==================== -->
-        <section id="education" class="fade-up">
-          <div class="flex items-center gap-4 mb-12">
-            <span class="section-number text-sm">04</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">Education</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
-
-          <div class="space-y-6">
-            <!-- BRAC University -->
-            <div class="gradient-border-card fade-up">
-              <div class="inner p-8 sm:p-10">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
-                  <h3 class="text-2xl font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">BRAC University</h3>
-                  <span class="text-xs font-medium px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400">2022 — Present</span>
-                </div>
-                <p class="text-white/60 font-medium mb-2">Bachelor of Science in Computer Science & Engineering</p>
-                <div class="flex flex-wrap gap-4 mb-4">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                    <span class="text-sm text-white/70 font-semibold">CGPA: 3.76 / 4.00</span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-                    <span class="text-sm text-white/70 font-semibold">124 Credits Completed</span>
-                  </div>
-                </div>
-                <div class="space-y-2 text-sm text-white/45">
-                  <p>🏅 <span class="text-white/60 font-medium">Merit-Based Scholarship</span> recipient for academic excellence.</p>
-                  <p>📝 <span class="text-white/60 font-medium">Thesis:</span> <em>ADECS: An Agentic AI Framework for Anomaly Detection and Intelligent Decision Support in Elderly Care System</em> — <span class="text-cyan-300 font-semibold">Grade: A+, Marks: 98.875/100</span></p>
-                </div>
-              </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="glass-card p-6 fade-up">
-                <h3 class="text-lg font-bold text-white mb-1">Motijheel Ideal School & College</h3>
-                <p class="text-xs text-white/40 mb-2">2019 — 2021</p>
-                <p class="text-sm text-white/50">HSC (Science)</p>
-                <p class="text-lg font-bold text-green-400 mt-2">GPA: 5.00</p>
-              </div>
-              <div class="glass-card p-6 fade-up">
-                <h3 class="text-lg font-bold text-white mb-1">Ideal School & College, Mugda</h3>
-                <p class="text-xs text-white/40 mb-2">2018 — 2019</p>
-                <p class="text-sm text-white/50">SSC (Science)</p>
-                <p class="text-lg font-bold text-green-400 mt-2">GPA: 4.94</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== ACHIEVEMENTS ==================== -->
-        <section id="achievements" class="fade-up">
-          <div class="flex items-center gap-4 mb-12">
-            <span class="section-number text-sm">05</span>
-            <h2 class="section-title text-3xl sm:text-4xl text-white">Honors & Awards</h2>
-            <div class="flex-1 section-line"></div>
-          </div>
-
-          <div class="achievement-marquee">
-            <div class="achievement-track">
-              <article class="achievement-card">
-                <img src="images/vc speacial recognition.jpeg" alt="VC Special Recognition Award">
-                <div class="caption">VC Special Recognition Award</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/gold award ieee r10.jpeg" alt="Gold Award IEEE R10 HTC">
-                <div class="caption">Gold Award - IEEE R10 HTC</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/iotrix.jpeg" alt="IOTrix award">
-                <div class="caption">2nd Runner-Up - IOTrix</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/bdapp innovation.jpeg" alt="bdapps innovation award">
-                <div class="caption">2nd Runner-Up - bdapps Innovation Summit</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/poster presentation pic2.jpeg" alt="Poster Presentation award">
-                <div class="caption">1st Runner-Up - Poster Presentation</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/55k grant.jpeg" alt="55K grant award">
-                <div class="caption">Winner - 55,000 BDT Grant</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/honourable mention.jpeg" alt="Honourable Mention">
-                <div class="caption">Honourable Mention</div>
-              </article>
-              <article class="achievement-card">
-                <img src="images/best ca award.jpeg" alt="Best Campus Ambassador Award">
-                <div class="caption">Best Campus Ambassador Award</div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-      </main>
-
-      <!-- ==================== FOOTER / CONTACT ==================== -->
-      <footer id="contact" class="mt-32 pb-12 footer-gradient">
-        <div class="text-center mb-12">
-          <h2 class="section-title text-3xl sm:text-4xl text-white mb-4">Let's Connect</h2>
-          <p class="text-white/40 max-w-md mx-auto">Let's build the future of AI and Robotics together.</p>
+          </article>
         </div>
 
-        <div class="flex justify-center flex-wrap gap-4 mb-12">
-          <a href="mailto:taznia.tabassum@g.bracu.ac.bd"
-            class="glass-card px-6 py-4 flex items-center gap-3 hover:border-cyan-500/30 group">
-            <i class="fas fa-envelope text-cyan-400 group-hover:scale-110 transition-transform"></i>
-            <span class="text-sm text-white/60 group-hover:text-white/90 transition-colors">taznia.tabassum@g.bracu.ac.bd</span>
-          </a>
-          <a href="Taznia Tabassum Onon CV.pdf" target="_blank" rel="noopener noreferrer"
-            class="glass-card px-6 py-4 flex items-center gap-3 hover:border-red-500/30 group">
-            <i class="fas fa-file-pdf text-red-400 group-hover:scale-110 transition-transform"></i>
-            <span class="text-sm text-white/60 group-hover:text-white/90 transition-colors">View CV</span>
-          </a>
-          <a href="tel:+8801616749045"
-            class="glass-card px-6 py-4 flex items-center gap-3 hover:border-green-500/30 group">
-            <i class="fas fa-phone text-green-400 group-hover:scale-110 transition-transform"></i>
-            <span class="text-sm text-white/60 group-hover:text-white/90 transition-colors">Phone</span>
-          </a>
-          <a href="https://www.linkedin.com/in/taznia-tabassum-onon-b26436261/" target="_blank" rel="noopener noreferrer"
-            class="glass-card px-6 py-4 flex items-center gap-3 hover:border-blue-500/30 group">
-            <i class="fab fa-linkedin text-blue-400 group-hover:scale-110 transition-transform"></i>
-            <span class="text-sm text-white/60 group-hover:text-white/90 transition-colors">LinkedIn</span>
-          </a>
-          <a href="https://github.com/Taznia/Taznia.github.io" target="_blank" rel="noopener noreferrer"
-            class="glass-card px-6 py-4 flex items-center gap-3 hover:border-purple-500/30 group">
-            <i class="fab fa-github text-purple-400 group-hover:scale-110 transition-transform"></i>
-            <span class="text-sm text-white/60 group-hover:text-white/90 transition-colors">GitHub</span>
-          </a>
+        <div class="project-list">
+          <article class="project-row reveal">
+            <div>
+              <p class="mono-label">ROBOTICS · ML · AWARDED</p>
+              <h3>AI-Powered Bionic Arm with Sensory Feedback</h3>
+              <p>Adaptive grasp patterns via ML + embedded control. Gold Award at IEEE R10 HTC.</p>
+            </div>
+            <p class="project-tech">Python · Embedded · ML</p>
+          </article>
+          <article class="project-row reveal">
+            <div>
+              <p class="mono-label">ROBOTICS · RL</p>
+              <h3>Quadruped Robot — AI Robotic Dog</h3>
+              <p>MuJoCo simulation with RL policies for gait, balance, and obstacle negotiation.</p>
+            </div>
+            <p class="project-tech">Python · MuJoCo · RL</p>
+          </article>
+          <article class="project-row reveal">
+            <div>
+              <p class="mono-label">MACHINE LEARNING</p>
+              <h3>Reinforcement Learning Simulations</h3>
+              <p>Agents across Gym environments — Q-Learning through deep RL decision loops.</p>
+            </div>
+            <p class="project-tech">Gym · Q-Learning</p>
+          </article>
+          <article class="project-row reveal">
+            <div>
+              <p class="mono-label">COMPUTER VISION</p>
+              <h3>Real-Time Face Detection System</h3>
+              <p>Low-latency OpenCV pipelines for multi-face tracking on live streams.</p>
+            </div>
+            <p class="project-tech">Python · OpenCV</p>
+          </article>
         </div>
-      </footer>
-
-    </div>
-  </div>
-
-  <!-- ==================== CHAT WIDGET ==================== -->
-  <div id="chat-window" class="hidden">
-    <div class="p-4 flex justify-between items-center border-b border-white/5">
-      <div class="flex items-center gap-2">
-        <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-        <h3 class="text-sm font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Taznia's AI Buddy</h3>
       </div>
-      <button id="chat-close-btn" class="text-white/40 hover:text-white transition text-sm" aria-label="Close chat assistant">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div id="chat-messages" class="flex flex-col space-y-2">
-      <div id="loading-indicator" class="hidden text-center text-xs text-purple-300 mt-2">
-        <i class="fas fa-spinner fa-spin mr-1"></i> Thinking...
-      </div>
-    </div>
-    <div class="p-4 border-t border-white/5">
-      <div class="flex gap-2">
-        <input type="text" id="chat-input" aria-label="Ask about Taznia" placeholder="Ask about Taznia..."
-          class="flex-grow p-2.5 rounded-xl bg-white/5 text-white text-sm border border-white/10 focus:outline-none focus:border-purple-500/50 placeholder:text-white/25"
-          onkeypress="if(event.key === 'Enter') document.getElementById('chat-send-btn').click()">
-        <button id="chat-send-btn"
-          class="bg-gradient-to-r from-purple-600 to-cyan-500 text-white px-4 rounded-xl hover:opacity-90 transition text-sm">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <button id="chat-toggle-btn" class="chat-toggle-btn" aria-label="Open chat assistant">
-    <i class="fas fa-comment-dots text-lg"></i>
-  </button>
+    <section class="section section-tint" id="experience">
+      <div class="shell">
+        <header class="section-head reveal">
+          <p class="mono-label">// 03 — EXPERIENCE</p>
+          <h2 class="section-title">Startup ops, research coordination, design delivery.</h2>
+        </header>
+        <ol class="timeline">
+          <li class="reveal">
+            <div class="timeline-meta">
+              <time>2025 — Present</time>
+              <h3>Co-Founder &amp; COO</h3>
+              <p class="org"><a href="https://www.onnesok.com" target="_blank" rel="noopener noreferrer">Onnesok</a></p>
+            </div>
+            <ul>
+              <li>Co-founded and scaled an innovation-driven tech startup focused on digital products and game development.</li>
+              <li>Lead strategic planning, operational execution, and product workflows.</li>
+            </ul>
+          </li>
+          <li class="reveal">
+            <div class="timeline-meta">
+              <time>2025 — 2026</time>
+              <h3>Coordinator</h3>
+              <p class="org">BuReD · BRAC University</p>
+            </div>
+            <ul>
+              <li>Coordinated workshops and seminars promoting student research.</li>
+              <li>Facilitated research initiatives with student teams and faculty mentors.</li>
+            </ul>
+          </li>
+          <li class="reveal">
+            <div class="timeline-meta">
+              <time>2024 — 2025</time>
+              <h3>Graphic Designer</h3>
+              <p class="org">Intellectium · Contract</p>
+            </div>
+            <ul>
+              <li>Designed visual content for digital platforms, branding, and marketing campaigns.</li>
+              <li>Collaborated with global teams to deliver polished design solutions.</li>
+            </ul>
+          </li>
+          <li class="reveal">
+            <div class="timeline-meta">
+              <time>2024 — 2025</time>
+              <h3>Facilitator</h3>
+              <p class="org">Ecollab International</p>
+            </div>
+            <ul>
+              <li>Ran workshops on leadership, communication, and collaboration.</li>
+              <li>Mentored participants and supported program learning outcomes.</li>
+            </ul>
+          </li>
+          <li class="reveal">
+            <div class="timeline-meta">
+              <time>2024 — 2025</time>
+              <h3>Team Lead — Social &amp; Content</h3>
+              <p class="org">Project Proyash</p>
+            </div>
+            <ul>
+              <li>Led social media and content strategy to strengthen the project’s online presence.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </section>
 
-  <!-- ==================== SCRIPTS ==================== -->
-  <script src="config.js"></script>
+    <section class="section" id="skills">
+      <div class="shell">
+        <header class="section-head reveal">
+          <p class="mono-label">// 04 — STACK</p>
+          <h2 class="section-title">Engineered to be opened up, not locked down.</h2>
+        </header>
+        <div class="skills-grid">
+          <article class="skill-card reveal">
+            <span class="skill-num">01</span>
+            <h3>Intelligence</h3>
+            <ul>
+              <li>Machine Learning</li>
+              <li>Reinforcement Learning</li>
+              <li>Computer Vision</li>
+              <li>OpenAI Gym / MuJoCo</li>
+            </ul>
+          </article>
+          <article class="skill-card reveal">
+            <span class="skill-num">02</span>
+            <h3>Systems</h3>
+            <ul>
+              <li>Robotics &amp; ROS</li>
+              <li>Embedded / Arduino</li>
+              <li>Python &amp; C++</li>
+              <li>Docker · Git</li>
+            </ul>
+          </article>
+          <article class="skill-card reveal">
+            <span class="skill-num">03</span>
+            <h3>Product</h3>
+            <ul>
+              <li>Flutter / Dart</li>
+              <li>UI / UX Design</li>
+              <li>Godot / GDScript</li>
+              <li>Firebase · SQL</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="education">
+      <div class="shell">
+        <header class="section-head reveal">
+          <p class="mono-label">// 05 — EDUCATION</p>
+          <h2 class="section-title">Academic signal with research teeth.</h2>
+        </header>
+        <article class="edu-primary reveal">
+          <div class="edu-top">
+            <div>
+              <h3>BRAC University</h3>
+              <p>BSc Computer Science &amp; Engineering · 2022 — Present</p>
+            </div>
+            <div class="edu-score">
+              <strong>3.76</strong>
+              <span class="mono-label">CGPA</span>
+            </div>
+          </div>
+          <p class="edu-thesis">
+            <strong>Thesis · A+ · 98.875/100</strong>
+            ADECS — An Agentic AI Framework for Anomaly Detection and Intelligent Decision Support in Elderly Care System.
+          </p>
+          <p class="edu-note">Merit-based scholarship · 124 credits completed</p>
+        </article>
+        <div class="edu-secondary">
+          <article class="reveal">
+            <h3>Motijheel Ideal School &amp; College</h3>
+            <p>HSC Science · GPA 5.00</p>
+          </article>
+          <article class="reveal">
+            <h3>Ideal School &amp; College, Mugda</h3>
+            <p>SSC Science · GPA 4.94</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="awards">
+      <div class="shell">
+        <header class="section-head reveal">
+          <p class="mono-label">// 06 — RECOGNITION</p>
+          <h2 class="section-title">Awards that survive a resume skim.</h2>
+        </header>
+        <div class="awards-grid">
+          <figure class="award reveal">
+            <img src="images/gold%20award%20ieee%20r10.jpeg" alt="Gold Award IEEE R10 HTC" loading="lazy">
+            <figcaption>Gold — IEEE R10 HTC</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/vc%20speacial%20recognition.jpeg" alt="VC Special Recognition Award" loading="lazy">
+            <figcaption>VC Special Recognition</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/55k%20grant.jpeg" alt="55K grant award" loading="lazy">
+            <figcaption>Winner — 55K BDT Grant</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/iotrix.jpeg" alt="IOTrix award" loading="lazy">
+            <figcaption>2nd Runner-Up — IOTrix</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/bdapp%20innovation.jpeg" alt="bdapps innovation award" loading="lazy">
+            <figcaption>2nd Runner-Up — bdapps</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/poster%20presentation%20pic2.jpeg" alt="Poster Presentation award" loading="lazy">
+            <figcaption>1st Runner-Up — Poster</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/best%20ca%20award.jpeg" alt="Best Campus Ambassador Award" loading="lazy">
+            <figcaption>Best Campus Ambassador</figcaption>
+          </figure>
+          <figure class="award reveal">
+            <img src="images/honourable%20mention.jpeg" alt="Honourable Mention" loading="lazy">
+            <figcaption>Honourable Mention</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="shell footer-inner">
+      <p class="mono-label reveal">// 07 — CONTACT</p>
+      <h2 class="footer-title reveal">Bring a builder<br><em>to your team.</em></h2>
+      <p class="footer-lead reveal">
+        Open to internships, research collaborations, and roles in AI, robotics, and product engineering.
+      </p>
+      <div class="footer-actions reveal">
+        <a class="btn btn-primary" href="mailto:taznia.tabassum@g.bracu.ac.bd">Request a conversation</a>
+        <a class="btn btn-ghost" href="Taznia%20Tabassum%20Onon%20CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:taznia.tabassum@g.bracu.ac.bd">taznia.tabassum@g.bracu.ac.bd</a>
+        <a href="tel:+8801616749045">+880 1616-749045</a>
+        <a href="https://www.linkedin.com/in/taznia-tabassum-onon-b26436261/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/Taznia/Taznia.github.io" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <p class="footer-note">© <span id="year"></span> Taznia Tabassum Onon</p>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
-  <script>
-    // --- Gemini Chat ---
-    const apiKey = config.apiKey;
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    let chatHistory = [];
-    let isSending = false;
-
-    const systemInstruction = {
-      parts: [{
-        text: "You are 'Buddy,' an interactive AI companion for the portfolio of Taznia Tabassum Onon, a dedicated student specializing in Robotics, Reinforcement Learning, and App Development. Your goal is to be helpful, friendly, and informative. When answering questions, use only the information provided about Taznia's background, which includes: " +
-          "- **Major Focus:** Robotics, AI (Reinforcement Learning), and App Development (Flutter). " +
-          "- **Key Projects:** AI-Powered Bionic Arm with Sensory Feedback (Robotics/ML), Quadruped Autonomous Robot (MuJoCo/RL), Mobile Apps (Learners & HireApp), Game Development (ShooterX, Sky Ball, Adventure of Sui). " +
-          "- **Skills:** Python, C++, ROS, Flutter, Machine Learning, OpenCV, Graphics Design, Web Apps, OpenAI Gym/MuJoCo, Firebase. " +
-          "- **Academics:** BRAC University, CSE, CGPA 3.76 (124 Credits). Thesis: ADECS: An Agentic AI Framework for Anomaly Detection and Intelligent Decision Support in Elderly Care System (Grade: A+, Marks: 98.875/100). " +
-          "- **Work Experience:** Co-Founder & COO at Onnesok, Coordinator at BuReD, Graphic Designer at Intellectium, Facilitator at Ecollab International, Team Lead at Project Proyash. " +
-          "- **Achievements:** VC Special Recognition Award, Gold Award at IEEE R10 HTC (Bionic Arm), 2nd Runner-Up at IOTrix, 2nd Runner-Up at bdapps, 1st Runner-Up at BuReD GenesisX, Merit-Based Scholarship. " +
-          "Keep answers concise and directly related to Taznia's portfolio. Do not invent information. If asked something outside this scope, suggest checking Taznia's contact information."
-      }]
-    };
-
-    const chatWindow = document.getElementById('chat-window');
-    const chatToggleBtn = document.getElementById('chat-toggle-btn');
-    const chatCloseBtn = document.getElementById('chat-close-btn');
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const chatSendBtn = document.getElementById('chat-send-btn');
-    const loadingIndicator = document.getElementById('loading-indicator');
-
-    function displayMessage(text, sender) {
-      const msgDiv = document.createElement('div');
-      msgDiv.classList.add('message');
-      if (sender === 'buddy') { msgDiv.classList.add('buddy-message', 'self-start'); }
-      else { msgDiv.classList.add('user-message', 'self-end'); }
-      msgDiv.textContent = text;
-      chatMessages.appendChild(msgDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function initializeChat() {
-      const welcomeMessage = "Hi! I'm Taznia's AI Buddy 👋 Ask me anything about her projects, skills, or experience!";
-      displayMessage(welcomeMessage, 'buddy');
-      chatHistory.push({ role: "model", parts: [{ text: welcomeMessage }] });
-    }
-
-    async function fetchWithRetry(url, options, retries = 3) {
-      for (let i = 0; i < retries; i++) {
-        try {
-          const response = await fetch(url, options);
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          return response;
-        } catch (error) {
-          if (i < retries - 1) { await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000)); }
-          else { throw error; }
-        }
-      }
-    }
-
-    async function sendMessage() {
-      const userText = chatInput.value.trim();
-      if (userText === "" || isSending) return;
-      displayMessage(userText, 'user');
-      chatInput.value = '';
-      chatHistory.push({ role: "user", parts: [{ text: userText }] });
-      isSending = true;
-      chatSendBtn.disabled = true;
-      loadingIndicator.classList.remove('hidden');
-      try {
-        const payload = { contents: chatHistory, systemInstruction: systemInstruction };
-        const response = await fetchWithRetry(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-        const candidate = result.candidates?.[0];
-        if (candidate && candidate.content?.parts?.[0]?.text) {
-          const botResponse = candidate.content.parts[0].text;
-          displayMessage(botResponse, 'buddy');
-          chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
-        } else {
-          displayMessage("Sorry, I encountered an issue. Could you please try again?", 'buddy');
-        }
-      } catch (error) {
-        console.error("Gemini API Error:", error);
-        displayMessage("Connection failed. Please check your network.", 'buddy');
-      } finally {
-        isSending = false;
-        chatSendBtn.disabled = false;
-        loadingIndicator.classList.add('hidden');
-      }
-    }
-
-    // --- Galaxy Animation ---
-    const canvas = document.getElementById('galaxy-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    const stars = [];
-    const STAR_COUNT = 500;
-
-    const MOUTH_HAPPY = "M 85 135 Q 100 150, 115 135";
-    const MOUTH_SAD = "M 85 145 Q 100 130, 115 145";
-
-    function resizeCanvas() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }
-
-    function Star(x, y, radius, velocity) {
-      this.x = x || Math.random() * width;
-      this.y = y || Math.random() * height;
-      this.radius = radius || Math.random() * 1.2 + 0.3;
-      const baseSpeed = 0.3;
-      const speed = baseSpeed * this.radius * 0.4;
-      this.velocity = velocity || {
-        x: (Math.random() - 0.5) * speed,
-        y: (Math.random() - 0.5) * speed
-      };
-      this.opacity = Math.random();
-    }
-
-    Star.prototype.draw = function () {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-      ctx.fill();
-    };
-
-    Star.prototype.update = function () {
-      this.x += this.velocity.x;
-      this.y += this.velocity.y;
-      if (this.x < 0) this.x = width;
-      if (this.x > width) this.x = 0;
-      if (this.y < 0) this.y = height;
-      if (this.y > height) this.y = 0;
-      this.opacity += (Math.random() - 0.5) * 0.02;
-      if (this.opacity > 1) this.opacity = 1;
-      if (this.opacity < 0.1) this.opacity = 0.1;
-      this.draw();
-    };
-
-    function initStars() {
-      stars.length = 0;
-      for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      ctx.fillStyle = 'rgba(3, 0, 20, 0.85)';
-      ctx.fillRect(0, 0, width, height);
-      stars.forEach(star => star.update());
-    }
-
-    function trackEyes(event) {
-      const eyePupils = document.querySelectorAll('.eye-pupil');
-      eyePupils.forEach(pupil => {
-        const svg = pupil.closest('svg');
-        if (!svg) return;
-        const svgRect = svg.getBoundingClientRect();
-        const cx = parseFloat(pupil.getAttribute('data-center-x'));
-        const cy = parseFloat(pupil.getAttribute('data-center-y'));
-        const maxMove = parseFloat(pupil.getAttribute('data-eye-limit')) || 10;
-        const scaleX = svgRect.width / 200;
-        const scaleY = svgRect.height / 240;
-        const mx = (event.clientX - svgRect.left) / scaleX;
-        const my = (event.clientY - svgRect.top) / scaleY;
-        const dx = mx - cx;
-        const dy = my - cy;
-        const angle = Math.atan2(dy, dx);
-        const dist = Math.min(Math.sqrt(dx * dx + dy * dy), maxMove);
-        pupil.setAttribute('transform', `translate(${Math.cos(angle) * dist}, ${Math.sin(angle) * dist})`);
-      });
-    }
-
-    function makePlanetSad() {
-      const mp = document.getElementById('mouth-path');
-      if (mp) mp.setAttribute('d', MOUTH_SAD);
-    }
-    function makePlanetHappy() {
-      const mp = document.getElementById('mouth-path');
-      if (mp) mp.setAttribute('d', MOUTH_HAPPY);
-    }
-
-    // --- Scroll Reveal ---
-    function revealOnScroll() {
-      const els = document.querySelectorAll('.fade-up');
-      els.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 80) {
-          el.classList.add('visible');
-        }
-      });
-    }
-
-    // --- Mobile Menu ---
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-    // Close mobile menu on link click
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-    });
-
-    // --- Init ---
-    window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
-    window.addEventListener('scroll', revealOnScroll);
-
-    window.onload = function () {
-      resizeCanvas();
-      initStars();
-      animate();
-      revealOnScroll();
-
-      window.addEventListener('mousemove', trackEyes);
-
-      const mouthPath = document.getElementById('mouth-path');
-      const planetSvg = document.getElementById('planet-svg');
-      if (mouthPath) {
-        mouthPath.setAttribute('d', MOUTH_HAPPY);
-        planetSvg.addEventListener('mouseenter', makePlanetSad);
-        planetSvg.addEventListener('mouseleave', makePlanetHappy);
-      }
-
-      chatToggleBtn.addEventListener('click', () => {
-        chatWindow.classList.toggle('hidden');
-        chatWindow.classList.toggle('open');
-        if (chatHistory.length === 0) initializeChat();
-      });
-      chatCloseBtn.addEventListener('click', () => {
-        chatWindow.classList.add('hidden');
-        chatWindow.classList.remove('open');
-      });
-      chatSendBtn.addEventListener('click', sendMessage);
-    };
-  </script>
 </body>
-
 </html>
-
-
