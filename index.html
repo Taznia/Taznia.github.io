@@ -482,6 +482,377 @@
     .footer-gradient {
       background: linear-gradient(180deg, transparent, rgba(168, 85, 247, 0.03), rgba(168, 85, 247, 0.06));
     }
+
+    /* ===================== VIDEO SHOWCASE ===================== */
+    .video-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .video-showcase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Featured card spans full width */
+    .video-card-featured {
+      grid-column: 1 / -1;
+    }
+
+    .video-card {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.4s, box-shadow 0.4s;
+    }
+    .video-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: rgba(168, 85, 247, 0.45);
+      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.2),
+                  0 30px 70px rgba(0, 0, 0, 0.5),
+                  0 0 60px rgba(168, 85, 247, 0.08);
+    }
+    .video-card:focus-within {
+      border-color: rgba(0, 240, 255, 0.5);
+      box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.15);
+    }
+
+    /* Glow ring on active/playing */
+    .video-card.is-playing {
+      border-color: rgba(0, 240, 255, 0.5);
+      box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.2),
+                  0 0 50px rgba(0, 240, 255, 0.12),
+                  0 30px 70px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.4s;
+    }
+    .video-card:not(.is-playing) video {
+      filter: brightness(0.55) saturate(1.1);
+    }
+    .video-card.is-playing video {
+      filter: brightness(1) saturate(1.15);
+    }
+
+    /* Aspect ratios */
+    .video-card-featured .video-wrapper {
+      aspect-ratio: 16 / 7;
+      min-height: 280px;
+    }
+    .video-card:not(.video-card-featured) .video-wrapper {
+      aspect-ratio: 16 / 10;
+      min-height: 220px;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .video-wrapper video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Scanline texture overlay */
+    .video-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.04) 3px,
+        rgba(0, 0, 0, 0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0.5;
+      transition: opacity 0.4s;
+    }
+    .video-card.is-playing::before {
+      opacity: 0.2;
+    }
+
+    /* Gradient overlay that fades on play */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(3, 0, 20, 0.92) 0%,
+        rgba(3, 0, 20, 0.35) 45%,
+        transparent 100%
+      );
+      transition: opacity 0.5s ease;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .video-card.is-playing .video-overlay {
+      opacity: 0.35;
+    }
+
+    /* Neon border sweep animation */
+    .video-card::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 24px;
+      background: conic-gradient(
+        from var(--angle, 0deg),
+        transparent 0deg,
+        rgba(168, 85, 247, 0.6) 60deg,
+        rgba(0, 240, 255, 0.5) 120deg,
+        transparent 180deg
+      );
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.4s;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: destination-out;
+      padding: 1px;
+      pointer-events: none;
+      animation: border-sweep 3s linear infinite;
+    }
+    .video-card:hover::after,
+    .video-card.is-playing::after {
+      opacity: 1;
+    }
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes border-sweep {
+      to { --angle: 360deg; }
+    }
+
+    /* Content block at bottom */
+    .video-meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem 1.5rem 1.4rem;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .video-card-featured .video-meta {
+      padding: 2rem 2rem 1.8rem;
+    }
+
+    .video-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      width: fit-content;
+      backdrop-filter: blur(8px);
+    }
+    .video-category.purple {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+    }
+    .video-category.cyan {
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: #67e8f9;
+    }
+    .video-category.pink {
+      background: rgba(236, 72, 153, 0.15);
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      color: #f9a8d4;
+    }
+    .video-category.green {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #86efac;
+    }
+
+    .video-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #fff;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    .video-card-featured .video-title {
+      font-size: 1.5rem;
+    }
+
+    .video-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      max-width: 42rem;
+    }
+
+    .video-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.25rem;
+    }
+    .video-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .video-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Play / pause button */
+    .video-play-btn {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      flex-shrink: 0;
+      z-index: 6;
+    }
+    .video-play-btn:hover {
+      background: rgba(168, 85, 247, 0.35);
+      border-color: rgba(168, 85, 247, 0.6);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    }
+    .video-card-featured .video-play-btn {
+      width: 54px; height: 54px;
+      font-size: 1.15rem;
+    }
+
+    /* Central big play icon (hidden when playing) */
+    .video-center-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 6;
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.6rem;
+      pointer-events: none;
+      transition: opacity 0.35s, transform 0.35s;
+    }
+    .video-card-featured .video-center-play {
+      width: 88px; height: 88px;
+      font-size: 2rem;
+    }
+    .video-card.is-playing .video-center-play {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    /* Mute button top-right */
+    .video-mute-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      z-index: 7;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.65);
+      font-size: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      opacity: 0;
+    }
+    .video-card:hover .video-mute-btn,
+    .video-card.is-playing .video-mute-btn {
+      opacity: 1;
+    }
+    .video-mute-btn:hover {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.5);
+      color: #fff;
+    }
+
+    /* Progress bar */
+    .video-progress-wrap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      z-index: 8;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .video-card.is-playing .video-progress-wrap {
+      opacity: 1;
+    }
+    .video-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+      transition: width 0.5s linear;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Section divider label */
+    .video-section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .video-section-label span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(168, 85, 247, 0.8);
+    }
+    .video-section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(168,85,247,0.3), transparent);
+    }
+    /* =================== END VIDEO SHOWCASE =================== */
   </style>
 </head>
 
@@ -505,6 +876,7 @@
         <ul class="hidden sm:flex items-center gap-1">
           <li><a href="#home" class="nav-link">Home</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#videos" class="nav-link">Demos</a></li>
           <li><a href="#experience" class="nav-link">Experience</a></li>
           <li><a href="#skills" class="nav-link">Skills</a></li>
           <li><a href="#education" class="nav-link">Education</a></li>
@@ -521,6 +893,7 @@
         <div class="flex flex-wrap gap-2">
           <a href="#home" class="nav-link">Home</a>
           <a href="#projects" class="nav-link">Projects</a>
+          <a href="#videos" class="nav-link">Demos</a>
           <a href="#experience" class="nav-link">Experience</a>
           <a href="#skills" class="nav-link">Skills</a>
           <a href="#education" class="nav-link">Education</a>
@@ -686,6 +1059,117 @@
           </div>
         </section>
 
+        <!-- ==================== VIDEO SHOWCASE ==================== -->
+        <section id="videos" class="fade-up">
+          <div class="flex items-center gap-4 mb-6">
+            <span class="section-number text-sm">01b</span>
+            <h2 class="section-title text-3xl sm:text-4xl text-white">Project Demos</h2>
+            <div class="flex-1 section-line"></div>
+          </div>
+          <p class="text-white/35 text-sm mb-10 max-w-xl">A live look at selected builds — hover to preview, click to play.</p>
+
+          <div class="video-showcase-grid">
+
+            <!-- FEATURED: Adventure of Sui -->
+            <div class="video-card video-card-featured fade-up" data-video-id="sui">
+              <div class="video-wrapper">
+                <video src="VIDEOS/ADVENTURE OF SUI.mp4" muted playsinline preload="metadata" loop></video>
+              </div>
+              <div class="video-overlay"></div>
+              <div class="video-center-play"><i class="fas fa-play"></i></div>
+              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+              <div class="video-meta">
+                <span class="video-category purple"><i class="fas fa-gamepad"></i> Game Dev</span>
+                <h3 class="video-title">Adventure of Sui</h3>
+                <p class="video-desc">A hand-crafted 2D adventure game built in Godot — featuring custom physics, sprite animations, and an original level design pipeline.</p>
+                <div class="video-footer">
+                  <div class="video-tags">
+                    <span class="video-tag">Godot</span>
+                    <span class="video-tag">GDScript</span>
+                    <span class="video-tag">2D Physics</span>
+                    <span class="video-tag">Level Design</span>
+                  </div>
+                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ShooterX -->
+            <div class="video-card fade-up" data-video-id="shooterx">
+              <div class="video-wrapper">
+                <video src="VIDEOS/shooterx.mp4" muted playsinline preload="metadata" loop></video>
+              </div>
+              <div class="video-overlay"></div>
+              <div class="video-center-play"><i class="fas fa-play"></i></div>
+              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+              <div class="video-meta">
+                <span class="video-category pink"><i class="fas fa-crosshairs"></i> Game Dev</span>
+                <h3 class="video-title">ShooterX</h3>
+                <p class="video-desc">Fast-paced top-down shooter with procedural enemy AI and dynamic difficulty scaling.</p>
+                <div class="video-footer">
+                  <div class="video-tags">
+                    <span class="video-tag">Godot</span>
+                    <span class="video-tag">Enemy AI</span>
+                    <span class="video-tag">Procedural</span>
+                  </div>
+                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- UI/UX 1 -->
+            <div class="video-card fade-up" data-video-id="uiux1">
+              <div class="video-wrapper">
+                <video src="VIDEOS/UIUX1.mp4" muted playsinline preload="metadata" loop></video>
+              </div>
+              <div class="video-overlay"></div>
+              <div class="video-center-play"><i class="fas fa-play"></i></div>
+              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+              <div class="video-meta">
+                <span class="video-category cyan"><i class="fas fa-layer-group"></i> UI/UX</span>
+                <h3 class="video-title">App UI Design — Vol. 1</h3>
+                <p class="video-desc">Interactive mobile UI prototype — smooth micro-interactions, gesture navigation, and a cohesive design system built for Flutter.</p>
+                <div class="video-footer">
+                  <div class="video-tags">
+                    <span class="video-tag">Flutter</span>
+                    <span class="video-tag">Figma</span>
+                    <span class="video-tag">Motion</span>
+                  </div>
+                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- UI/UX 2 -->
+            <div class="video-card fade-up" data-video-id="uiux2">
+              <div class="video-wrapper">
+                <video src="VIDEOS/UI_UX2.mp4" muted playsinline preload="metadata" loop></video>
+              </div>
+              <div class="video-overlay"></div>
+              <div class="video-center-play"><i class="fas fa-play"></i></div>
+              <button class="video-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+              <div class="video-progress-wrap"><div class="video-progress-bar"></div></div>
+              <div class="video-meta">
+                <span class="video-category green"><i class="fas fa-mobile-alt"></i> UI/UX</span>
+                <h3 class="video-title">App UI Design — Vol. 2</h3>
+                <p class="video-desc">Second-generation UI explorations — dark-mode flows, onboarding sequences, and component-level animation polish.</p>
+                <div class="video-footer">
+                  <div class="video-tags">
+                    <span class="video-tag">Flutter</span>
+                    <span class="video-tag">Firebase</span>
+                    <span class="video-tag">Dark Mode</span>
+                  </div>
+                  <button class="video-play-btn" aria-label="Play video"><i class="fas fa-play"></i></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
         <!-- ==================== EXPERIENCE ==================== -->
         <section id="experience" class="fade-up">
           <div class="flex items-center gap-4 mb-12">
@@ -703,8 +1187,9 @@
                   <span class="text-xs font-medium px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400">Jan 2025 — Present</span>
                 </div>
                 <p class="text-sm text-purple-300 font-semibold mb-3">
-                  <a href="https://www.onnesok.com" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-300 transition-colors">Onnesok � Technology Platform</a>
+                  <a href="https://www.onnesok.com" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-300 transition-colors">Onnesok — Technology Platform</a>
                 </p>
+                <ul class="space-y-2 text-sm text-white/45">
                   <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Co-founded and scaled an innovation-driven tech startup focused on digital products and game development.</li>
                   <li class="flex gap-2"><span class="text-purple-400 mt-0.5">▸</span> Leading strategic planning, operational execution, and product workflows.</li>
                 </ul>
