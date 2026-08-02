@@ -711,6 +711,7 @@
     }
     /* =================== END PROJECT VIDEO CARDS =================== */
   </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -732,6 +733,7 @@
         </a>
         <ul class="hidden sm:flex items-center gap-1">
           <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#projects" class="nav-link">Projects</a></li>
           <li><a href="#experience" class="nav-link">Experience</a></li>
           <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -740,7 +742,7 @@
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
         <!-- Mobile menu toggle -->
-        <button id="mobile-menu-btn" class="sm:hidden text-white/60 hover:text-white text-xl">
+        <button id="mobile-menu-btn" class="sm:hidden text-white/60 hover:text-white text-xl" aria-label="Open navigation menu">
           <i class="fas fa-bars"></i>
         </button>
       </div>
@@ -748,6 +750,7 @@
       <div id="mobile-menu" class="hidden sm:hidden px-6 pb-4">
         <div class="flex flex-wrap gap-2">
           <a href="#home" class="nav-link">Home</a>
+          <a href="#about" class="nav-link">About</a>
           <a href="#projects" class="nav-link">Projects</a>
           <a href="#experience" class="nav-link">Experience</a>
           <a href="#skills" class="nav-link">Skills</a>
@@ -830,6 +833,61 @@
 
       <main class="space-y-32">
 
+        <!-- ==================== ABOUT ==================== -->
+        <section id="about" class="fade-up">
+          <div class="flex items-center gap-4 mb-12">
+            <span class="section-number text-sm">00</span>
+            <h2 class="section-title text-3xl sm:text-4xl text-white">About Me</h2>
+            <div class="flex-1 section-line"></div>
+          </div>
+
+          <div class="about-grid">
+            <div class="glass-card p-8 about-copy">
+              <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/70 mb-4">CSE student at BRAC University</p>
+              <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif;">Designing polished digital experiences with robotics, AI, and product thinking.</h3>
+              <p class="text-white/55 leading-relaxed mb-5">
+                I build across robotics, game development, machine learning, and mobile UI/UX. My focus is on turning complex ideas into systems that feel intuitive, visually premium, and technically grounded.
+              </p>
+              <div class="about-badges">
+                <span class="skill-pill cyan">Robotics</span>
+                <span class="skill-pill">AI / ML</span>
+                <span class="skill-pill pink">App Design</span>
+                <span class="skill-pill green">Game Dev</span>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <div class="gradient-border-card">
+                <div class="inner p-6">
+                  <div class="about-stat-grid">
+                    <div class="about-stat">
+                      <strong>3.76</strong>
+                      <span>Current CGPA at BRAC University</span>
+                    </div>
+                    <div class="about-stat">
+                      <strong>124</strong>
+                      <span>Credits completed with scholarship support</span>
+                    </div>
+                    <div class="about-stat">
+                      <strong>5+</strong>
+                      <span>Core domains spanning AI, UX, and robotics</span>
+                    </div>
+                    <div class="about-stat">
+                      <strong>A+</strong>
+                      <span>Thesis result for ADECS research project</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="glass-card p-6">
+                <p class="text-sm text-white/60 leading-relaxed">
+                  I care about clean execution, strong storytelling, and interfaces that help recruiters understand the depth of the work immediately.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- ==================== PROJECTS ==================== -->
         <section id="projects" class="fade-up">
           <div class="flex items-center gap-4 mb-12">
@@ -838,15 +896,18 @@
             <div class="flex-1 section-line"></div>
           </div>
 
-          <div class="space-y-6">
+          <div class="video-gallery space-y-6">
 
             <!-- ── Game Dev: Adventure of Sui ── VIDEO CARD ── -->
             <article class="proj-video-card fade-up">
               <div class="proj-video-side">
-                <video class="proj-video" src="VIDEOS/ADVENTURE OF SUI.mp4" muted playsinline preload="metadata" loop></video>
+                <video class="proj-video" muted playsinline preload="none" loop>
+                  <source data-src="VIDEOS/ADVENTURE OF SUI.webm" type="video/webm">
+                  <source data-src="VIDEOS/ADVENTURE OF SUI.mp4" type="video/mp4">
+                </video>
                 <div class="proj-video-overlay"></div>
-                <div class="proj-center-play"><i class="fas fa-play"></i></div>
-                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <button type="button" class="proj-center-play" aria-label="Play video demo"><i class="fas fa-play"></i></button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
                 <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
               <div class="proj-info-side">
@@ -859,17 +920,20 @@
                   <span class="ptag purple">2D Physics</span>
                   <span class="ptag purple">Level Design</span>
                 </div>
-                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+                <button type="button" class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
               </div>
             </article>
 
             <!-- ── Game Dev: ShooterX ── VIDEO CARD ── -->
             <article class="proj-video-card fade-up">
               <div class="proj-video-side">
-                <video class="proj-video" src="VIDEOS/shooterx.mp4" muted playsinline preload="metadata" loop></video>
+                <video class="proj-video" muted playsinline preload="none" loop>
+                  <source data-src="VIDEOS/shooterx.webm" type="video/webm">
+                  <source data-src="VIDEOS/shooterx.mp4" type="video/mp4">
+                </video>
                 <div class="proj-video-overlay"></div>
-                <div class="proj-center-play"><i class="fas fa-play"></i></div>
-                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <button type="button" class="proj-center-play" aria-label="Play video demo"><i class="fas fa-play"></i></button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
                 <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
               <div class="proj-info-side">
@@ -882,17 +946,20 @@
                   <span class="ptag pink">Procedural</span>
                   <span class="ptag pink">Game Design</span>
                 </div>
-                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+                <button type="button" class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
               </div>
             </article>
 
             <!-- ── UI/UX Vol. 1 ── VIDEO CARD ── -->
             <article class="proj-video-card fade-up">
               <div class="proj-video-side">
-                <video class="proj-video" src="VIDEOS/UIUX1.mp4" muted playsinline preload="metadata" loop></video>
+                <video class="proj-video" muted playsinline preload="none" loop>
+                  <source data-src="VIDEOS/UIUX1.webm" type="video/webm">
+                  <source data-src="VIDEOS/UIUX1.mp4" type="video/mp4">
+                </video>
                 <div class="proj-video-overlay"></div>
-                <div class="proj-center-play"><i class="fas fa-play"></i></div>
-                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <button type="button" class="proj-center-play" aria-label="Play video demo"><i class="fas fa-play"></i></button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
                 <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
               <div class="proj-info-side">
@@ -905,17 +972,20 @@
                   <span class="ptag cyan">Motion Design</span>
                   <span class="ptag cyan">Firebase</span>
                 </div>
-                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+                <button type="button" class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
               </div>
             </article>
 
             <!-- ── UI/UX Vol. 2 ── VIDEO CARD ── -->
             <article class="proj-video-card fade-up">
               <div class="proj-video-side">
-                <video class="proj-video" src="VIDEOS/UI_UX2.mp4" muted playsinline preload="metadata" loop></video>
+                <video class="proj-video" muted playsinline preload="none" loop>
+                  <source data-src="VIDEOS/UI_UX2.webm" type="video/webm">
+                  <source data-src="VIDEOS/UI_UX2.mp4" type="video/mp4">
+                </video>
                 <div class="proj-video-overlay"></div>
-                <div class="proj-center-play"><i class="fas fa-play"></i></div>
-                <button class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
+                <button type="button" class="proj-center-play" aria-label="Play video demo"><i class="fas fa-play"></i></button>
+                <button type="button" class="proj-mute-btn" aria-label="Toggle mute"><i class="fas fa-volume-mute"></i></button>
                 <div class="proj-progress-wrap"><div class="proj-progress-bar"></div></div>
               </div>
               <div class="proj-info-side">
@@ -928,7 +998,7 @@
                   <span class="ptag green">Onboarding</span>
                   <span class="ptag green">Firebase</span>
                 </div>
-                <button class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
+                <button type="button" class="proj-play-btn"><i class="fas fa-play"></i> <span class="btn-label">Play Demo</span></button>
               </div>
             </article>
 
@@ -1253,7 +1323,7 @@
         <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
         <h3 class="text-sm font-bold text-white" style="font-family: 'Space Grotesk', sans-serif;">Taznia's AI Buddy</h3>
       </div>
-      <button id="chat-close-btn" class="text-white/40 hover:text-white transition text-sm">
+      <button id="chat-close-btn" class="text-white/40 hover:text-white transition text-sm" aria-label="Close chat assistant">
         <i class="fas fa-times"></i>
       </button>
     </div>
@@ -1264,7 +1334,7 @@
     </div>
     <div class="p-4 border-t border-white/5">
       <div class="flex gap-2">
-        <input type="text" id="chat-input" placeholder="Ask about Taznia..."
+        <input type="text" id="chat-input" aria-label="Ask about Taznia" placeholder="Ask about Taznia..."
           class="flex-grow p-2.5 rounded-xl bg-white/5 text-white text-sm border border-white/10 focus:outline-none focus:border-purple-500/50 placeholder:text-white/25"
           onkeypress="if(event.key === 'Enter') document.getElementById('chat-send-btn').click()">
         <button id="chat-send-btn"
@@ -1275,12 +1345,13 @@
     </div>
   </div>
 
-  <button id="chat-toggle-btn" class="chat-toggle-btn">
+  <button id="chat-toggle-btn" class="chat-toggle-btn" aria-label="Open chat assistant">
     <i class="fas fa-comment-dots text-lg"></i>
   </button>
 
   <!-- ==================== SCRIPTS ==================== -->
   <script src="config.js"></script>
+  <script src="script.js"></script>
   <script>
     // --- Gemini Chat ---
     const apiKey = config.apiKey;
