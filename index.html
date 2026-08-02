@@ -486,44 +486,43 @@
     /* ===================== PROJECT VIDEO CARDS (sidebar layout) ===================== */
 
     .proj-video-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-direction: row;
       border-radius: 24px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.02);
       transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
-      min-height: 280px;
     }
     .proj-video-card:hover {
-      border-color: rgba(168,85,247,0.35);
-      box-shadow: 0 0 50px rgba(168,85,247,0.08), 0 24px 60px rgba(0,0,0,0.4);
+      border-color: rgba(168,85,247,0.4);
+      box-shadow: 0 0 50px rgba(168,85,247,0.1), 0 24px 60px rgba(0,0,0,0.4);
       transform: translateY(-4px);
     }
     .proj-video-card.is-playing {
-      border-color: rgba(0,240,255,0.45);
+      border-color: rgba(0,240,255,0.5);
       box-shadow: 0 0 0 1px rgba(0,240,255,0.15), 0 0 60px rgba(0,240,255,0.1), 0 24px 60px rgba(0,0,0,0.4);
     }
 
-    /* ── VIDEO SIDE (left) ── */
+    /* ── VIDEO SIDE (left 55%) ── */
     .proj-video-side {
       position: relative;
+      width: 55%;
+      flex-shrink: 0;
       overflow: hidden;
       background: #000;
       cursor: pointer;
-      min-height: 260px;
     }
+    /* VIDEO is a normal block — it drives the height of the whole row */
     .proj-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       display: block;
-      transition: filter 0.4s, transform 0.6s;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: filter 0.4s, transform 0.5s;
     }
     .proj-video-card:not(.is-playing) .proj-video {
-      filter: brightness(0.5) saturate(1.1);
+      filter: brightness(0.45) saturate(1.1);
     }
     .proj-video-card.is-playing .proj-video {
       filter: brightness(1) saturate(1.1);
@@ -532,18 +531,16 @@
       transform: scale(1.03);
     }
 
-    /* dark gradient over video bottom */
+    /* overlays sit on top of the normal-flow video */
     .proj-video-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(3,0,20,0.15) 0%, rgba(3,0,20,0.55) 100%);
+      background: linear-gradient(120deg, rgba(3,0,20,0.1) 0%, rgba(3,0,20,0.55) 100%);
       pointer-events: none;
       z-index: 1;
       transition: opacity 0.4s;
     }
-    .proj-video-card.is-playing .proj-video-overlay {
-      opacity: 0.2;
-    }
+    .proj-video-card.is-playing .proj-video-overlay { opacity: 0.15; }
 
     /* Big centre play icon */
     .proj-center-play {
@@ -676,57 +673,41 @@
     .ptag.pink   { background: rgba(236,72,153,0.1);  border: 1px solid rgba(236,72,153,0.2);  color: #f9a8d4; }
     .ptag.green  { background: rgba(34,197,94,0.08);  border: 1px solid rgba(34,197,94,0.18);  color: #86efac; }
 
-    /* Play button inside info sidebar */
+    /* Play / Pause button inside sidebar */
     .proj-play-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
       width: fit-content;
-      padding: 0.55rem 1.2rem;
+      padding: 0.6rem 1.3rem;
       border-radius: 999px;
       background: rgba(168,85,247,0.15);
-      border: 1px solid rgba(168,85,247,0.35);
+      border: 1px solid rgba(168,85,247,0.38);
       color: #d8b4fe;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 0.03em;
       cursor: pointer;
       transition: all 0.25s;
     }
     .proj-play-btn:hover {
       background: rgba(168,85,247,0.3);
-      border-color: rgba(168,85,247,0.6);
+      border-color: rgba(168,85,247,0.65);
       color: #fff;
       box-shadow: 0 0 20px rgba(168,85,247,0.2);
     }
     .proj-video-card.is-playing .proj-play-btn {
-      background: rgba(0,240,255,0.12);
-      border-color: rgba(0,240,255,0.35);
+      background: rgba(0,240,255,0.1);
+      border-color: rgba(0,240,255,0.38);
       color: #67e8f9;
     }
-    .proj-video-card.is-playing .proj-play-btn .btn-label::before {
-      content: 'Pause';
-    }
-    .proj-video-card:not(.is-playing) .proj-play-btn .btn-label::before {
-      content: 'Play Demo';
-    }
-    .proj-play-btn .btn-label { font-size: 0;} /* hide original text, use ::before */
 
-    /* Responsive: stack on mobile */
+    /* Responsive: stack vertically on mobile */
     @media (max-width: 700px) {
-      .proj-video-card {
-        grid-template-columns: 1fr;
-        grid-template-rows: 220px auto;
-      }
-      .proj-video-side {
-        min-height: 220px;
-      }
-      .proj-info-side {
-        border-left: none;
-        border-top: 1px solid rgba(255,255,255,0.05);
-        padding: 1.5rem;
-      }
+      .proj-video-card { flex-direction: column; }
+      .proj-video-side { width: 100%; }
+      .proj-video      { height: 220px; }
+      .proj-info-side  { border-left: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.4rem; }
     }
     /* =================== END PROJECT VIDEO CARDS =================== */
   </style>

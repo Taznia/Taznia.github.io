@@ -1,164 +1,141 @@
-// Mobile navigation (old styles.css nav, kept for compatibility)
-const navToggle = document.getElementById("navToggle");
-const navLinksEl = document.querySelector(".nav-links");
-if (navToggle && navLinksEl) {
-  navToggle.addEventListener("click", () => navLinksEl.classList.toggle("open"));
-  navLinksEl.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") navLinksEl.classList.remove("open");
-  });
-}
-
-// Dynamic year in footer
-const yearSpan = document.getElementById("year");
-if (yearSpan) yearSpan.textContent = String(new Date().getFullYear());
-
-// Scroll reveal (.reveal class — old styles.css)
-const revealEls = document.querySelectorAll(".reveal");
-if (revealEls.length) {
-  const revealObs = new IntersectionObserver(
-    (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in-view"); revealObs.unobserve(e.target); } }),
-    { threshold: 0.18 }
-  );
-  revealEls.forEach((el) => revealObs.observe(el));
-}
-
 // =====================================================================
-// PROJECT VIDEO CARDS — sidebar layout
+// PROJECT VIDEO CARDS — sidebar layout with video + info panel
+// Runs on window.onload so the inline script's window.onload fires
+// first (galaxy/chat), then this appends to the load queue via
+// addEventListener which stacks safely.
 // =====================================================================
-function initProjectVideoCards() {
-  const cards = document.querySelectorAll(".proj-video-card");
+window.addEventListener('load', function () {
+
+  var cards = document.querySelectorAll('.proj-video-card');
   if (!cards.length) return;
 
-  let activeCard = null;
+  var activeCard = null;
 
-  // ── helpers ──────────────────────────────────────────────────────────
-  function getEls(card) {
-    return {
-      video:      card.querySelector(".proj-video"),
-      playBtn:    card.querySelector(".proj-play-btn"),
-      muteBtn:    card.querySelector(".proj-mute-btn"),
-      progressBar:card.querySelector(".proj-progress-bar"),
-      centerPlay: card.querySelector(".proj-center-play"),
-    };
+  function getVideo(card)    { return card.querySelector('.proj-video'); }
+  function getPlayBtn(card)  { return card.querySelector('.proj-play-btn'); }
+  function getMuteBtn(card)  { return card.querySelector('.proj-mute-btn'); }
+  function getProgress(card) { return card.querySelector('.proj-progress-bar'); }
+
+  function setPlayBtn(card, playing) {
+    var btn = getPlayBtn(card);
+    if (!btn) return;
+    var icon = btn.querySelector('i');
+    if (icon) icon.className = playing ? 'fas fa-pause' : 'fas fa-play';
+    var label = btn.querySelector('.btn-label');
+    if (label) label.textContent = playing ? 'Pause' : 'Play Demo';
   }
 
-  function setPlayBtnState(card, isPlaying) {
-    const btn = card.querySelector(".proj-play-btn");
+  function setMuteIcon(btn, muted) {
     if (!btn) return;
-    const icon = btn.querySelector("i");
-    if (icon) icon.className = isPlaying ? "fas fa-pause" : "fas fa-play";
-    // .btn-label text is driven by CSS ::before content, no JS needed
-  }
-
-  function setMuteIcon(btn, isMuted) {
-    if (!btn) return;
-    const icon = btn.querySelector("i");
-    if (icon) icon.className = isMuted ? "fas fa-volume-mute" : "fas fa-volume-up";
-    btn.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
+    var icon = btn.querySelector('i');
+    if (icon) icon.className = muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
   }
 
   function stopCard(card) {
-    const { video, progressBar } = getEls(card);
-    video.pause();
-    video.muted = true;
-    card.classList.remove("is-playing");
-    setPlayBtnState(card, false);
-    setMuteIcon(card.querySelector(".proj-mute-btn"), true);
-    if (progressBar) progressBar.style.width = "0%";
+    var vid = getVideo(card);
+    var bar = getProgress(card);
+    vid.pause();
+    vid.muted = true;
+    card.classList.remove('is-playing');
+    setPlayBtn(card, false);
+    setMuteIcon(getMuteBtn(card), true);
+    if (bar) bar.style.width = '0%';
     if (activeCard === card) activeCard = null;
   }
 
   function playCard(card) {
+    // stop whoever was playing
     if (activeCard && activeCard !== card) stopCard(activeCard);
-    const { video, muteBtn } = getEls(card);
-    video.muted = false;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay policy blocked unmuted play — fall back to muted
-        video.muted = true;
-        video.play().catch(() => {});
+
+    var vid = getVideo(card);
+    var muteBtn = getMuteBtn(card);
+
+    vid.muted = false;
+    var p = vid.play();
+    if (p !== undefined) {
+      p.catch(function () {
+        // browser blocked unmuted autoplay — retry muted
+        vid.muted = true;
+        vid.play().catch(function () {});
       });
     }
-    card.classList.add("is-playing");
-    setPlayBtnState(card, true);
-    setMuteIcon(muteBtn, video.muted);
+    card.classList.add('is-playing');
+    setPlayBtn(card, true);
+    setMuteIcon(muteBtn, vid.muted);
     activeCard = card;
   }
 
-  // ── per-card wiring ───────────────────────────────────────────────────
-  cards.forEach((card) => {
-    const { video, playBtn, muteBtn, progressBar } = getEls(card);
-    if (!video) return;
+  cards.forEach(function (card) {
+    var vid     = getVideo(card);
+    var playBtn = getPlayBtn(card);
+    var muteBtn = getMuteBtn(card);
+    var bar     = getProgress(card);
+    var side    = card.querySelector('.proj-video-side');
 
-    // ensure starts paused + muted
-    video.muted = true;
-    video.pause();
+    if (!vid) return;
 
-    const videoSide = card.querySelector(".proj-video-side");
+    // reset state
+    vid.muted = true;
+    vid.pause();
 
-    // hover on video side → silent preview
-    if (videoSide) {
-      videoSide.addEventListener("mouseenter", () => {
-        if (card.classList.contains("is-playing")) return;
-        video.muted = true;
-        video.play().catch(() => {});
+    // hover over video side → silent preview
+    if (side) {
+      side.addEventListener('mouseenter', function () {
+        if (card.classList.contains('is-playing')) return;
+        vid.muted = true;
+        vid.play().catch(function () {});
       });
-      videoSide.addEventListener("mouseleave", () => {
-        if (card.classList.contains("is-playing")) return;
-        video.pause();
-        video.currentTime = 0;
+      side.addEventListener('mouseleave', function () {
+        if (card.classList.contains('is-playing')) return;
+        vid.pause();
+        vid.currentTime = 0;
       });
-      // click on video side → toggle full play
-      videoSide.addEventListener("click", (e) => {
-        if (e.target.closest(".proj-mute-btn")) return;
-        card.classList.contains("is-playing") ? stopCard(card) : playCard(card);
+      // click video side → toggle play/stop
+      side.addEventListener('click', function (e) {
+        if (e.target.closest('.proj-mute-btn')) return;
+        card.classList.contains('is-playing') ? stopCard(card) : playCard(card);
       });
     }
 
-    // play/pause button in info sidebar
+    // play/pause button in sidebar
     if (playBtn) {
-      playBtn.addEventListener("click", () => {
-        card.classList.contains("is-playing") ? stopCard(card) : playCard(card);
+      playBtn.addEventListener('click', function () {
+        card.classList.contains('is-playing') ? stopCard(card) : playCard(card);
       });
     }
 
     // mute toggle
     if (muteBtn) {
-      muteBtn.addEventListener("click", (e) => {
+      muteBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        video.muted = !video.muted;
-        setMuteIcon(muteBtn, video.muted);
+        vid.muted = !vid.muted;
+        setMuteIcon(muteBtn, vid.muted);
       });
     }
 
     // progress bar
-    if (progressBar) {
-      video.addEventListener("timeupdate", () => {
-        if (!video.duration) return;
-        progressBar.style.width = (video.currentTime / video.duration * 100) + "%";
+    if (bar) {
+      vid.addEventListener('timeupdate', function () {
+        if (!vid.duration) return;
+        bar.style.width = (vid.currentTime / vid.duration * 100) + '%';
       });
     }
 
-    // sync mute icon if browser changes volume
-    video.addEventListener("volumechange", () => {
-      setMuteIcon(muteBtn, video.muted);
+    vid.addEventListener('volumechange', function () {
+      setMuteIcon(muteBtn, vid.muted);
     });
   });
 
-  // pause cards that scroll out of view
-  const scrollPauseObs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting && entry.target.classList.contains("is-playing")) {
+  // pause when scrolled out of view
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting && entry.target.classList.contains('is-playing')) {
           stopCard(entry.target);
         }
       });
-    },
-    { threshold: 0.1 }
-  );
-  cards.forEach((card) => scrollPauseObs.observe(card));
-}
+    }, { threshold: 0.1 });
+    cards.forEach(function (card) { obs.observe(card); });
+  }
 
-// Run everything after full DOM load
-window.addEventListener("DOMContentLoaded", initProjectVideoCards);
+});
