@@ -1385,7 +1385,7 @@ button:focus-visible {
 
   .chip-row { justify-content: flex-end; }
 
-  .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
   .project-feature {
     grid-template-columns: 1.25fr 0.95fr;
